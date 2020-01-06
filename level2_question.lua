@@ -460,6 +460,7 @@ local function CheckUserAnswerInput()
     else
         -- they got it wrong so lose a life
         lives = lives - 1
+        AskQuestionLevel2()
         livesText.text = "lives = " .. lives 
         wrongSoundChannel = audio.play( wrongSound )
         inCorrectObject.isVisible = true
@@ -470,7 +471,7 @@ local function CheckUserAnswerInput()
             BackToLevel2Lose()
         else 
             secondsLeft = totalSeconds
-            AskQuestionLevel2()
+            
         end
     end
 end
