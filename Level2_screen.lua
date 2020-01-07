@@ -1126,7 +1126,7 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
-        audio.stop( level1SoundChannel4 )
+        
 
 
     -----------------------------------------------------------------------------------------
@@ -1136,6 +1136,7 @@ function scene:hide( event )
         RemoveAnswerBoxEventListeners()
         MuteButton:removeEventListener("touch", MuteListener)
         UnmuteButton:removeEventListener("touch", UnmuteListener)
+        audio.pause( level1SoundChannel4 )
     end
 
 end -- function scene:hide( event )
