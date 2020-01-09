@@ -85,6 +85,7 @@ local userAnswerBoxPlaceholder
 local correctSound
 local booSound
 local points = 0
+local backButton
 
 --scroll speed for the ball to Score
 local scrollXSpeedCorrect = 14.5
@@ -98,7 +99,7 @@ local ballPosition
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 local function BackTransition()
-    composer.gotoScene( "mainmenu", {effect = "flipFadeOutIn", time = 500})
+    composer.gotoScene( "level5&6", {effect = "flipFadeOutIn", time = 500})
 end 
 
 local function DisplayQuestion()

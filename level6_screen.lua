@@ -80,6 +80,7 @@ local userAnswerBoxPlaceholder
 local correctSound
 local booSound
 
+
 --scroll speed for the ball to Score
 local scrollXSpeedCorrect = 14.5
 local scrollYSpeedCorrect = -17
@@ -101,7 +102,8 @@ local wrongSoundChannel
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------- 
+
 
 local function DisplayQuestion()
     local randomNumber1
@@ -447,6 +449,7 @@ function scene:create( event )
     local sceneGroup = self.view
 
     ----------------------------------------------------------------------------------
+ 
     ----------------------------------------------------------------------------------
     --Inserting backgroud image and lives
     ----------------------------------------------------------------------------------
@@ -537,6 +540,7 @@ function scene:create( event )
     sceneGroup:insert( pointsText )
     sceneGroup:insert( correctText )
     sceneGroup:insert( livesText )
+    sceneGroup:insert( backButton )
 
 end --function scene:create( event )
 
