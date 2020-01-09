@@ -21,7 +21,7 @@ local widget = require( "widget" )
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "mainmenu"
+sceneName = "level5&6"
 
 -----------------------------------------------------------------------------------------
 
@@ -38,16 +38,10 @@ soundOn = true
 -----------------------------------------------------------------------------------------
 
 local bkg_image
-local MuteButton
-local UnmuteButton
-local creditsButton
-local instructionsButton
-local level3Button
-local level4Button
-local instructionbakingButton
-local level1Button
-local level2Button
-local extraButton
+local level5Button
+local level6Button
+local homeButton
+
 -----------------------------------------------------------------------------------------
 -- LOCAL SOUND
 -----------------------------------------------------------------------------------------
@@ -56,46 +50,21 @@ local mainmenuSoundChannel3
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
------------------------------------------------------------------------------------------
-
--- Creating Transition Function to Credits Page
-local function CreditsTransition( )       
-    composer.gotoScene( "credits_screen", {effect = "flip", time = 500})
-end 
-
--- Creating Transition to instruction Screen
-local function Instructions2ScreenTransition( )
-    composer.gotoScene( "instruction2_screen", {effect = "slideDown", time = 1000})
-end    
+-----------------------------------------------------------------------------------------    
 
 -- Creating Transition to play Screen
-local function Level3Transition( )
-    composer.gotoScene( "level3_screen", {effect = "slideDown", time = 500})
+local function Level5Transition( )
+    composer.gotoScene( "level5_screen", {effect = "slideDown", time = 500})
 end 
 
 -- Creating Transition to play Screen
-local function Level4Transition( )
-    composer.gotoScene( "level4_screen", {effect = "slideDown", time = 500})
-end 
-
--- Creating Transition to instruction Screen
-local function InstructionsScreenTransition( )
-    composer.gotoScene( "instruction_screen", {effect = "slideDown", time = 1000})
-end    
-
--- Creating Transition to play Screen
-local function Level1Transition( )
-    composer.gotoScene( "level1_screen", {effect = "slideDown", time = 500})
+local function Level6Transition( )
+    composer.gotoScene( "level6_screen", {effect = "slideDown", time = 500})
 end 
 
 -- Creating Transition to play Screen
-local function Level2Transition( )
-    composer.gotoScene( "level2_screen", {effect = "slideDown", time = 500})
-end 
-
--- Creating Transition to play Screen
-local function ExtraLevelTransition( )
-    composer.gotoScene( "level5&6", {effect = "slideDown", time = 500})
+local function HomeTransition( )
+    composer.gotoScene( "mainmenu", {effect = "slideDown", time = 500})
 end 
 
 
@@ -171,7 +140,7 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------   
 
     -- Creating Credits Button
-    creditsButton = widget.newButton( 
+    homeButton = widget.newButton( 
         {
             --Set its position on the screen relative to the screen size
             x = display.contentWidth/2,
@@ -184,51 +153,16 @@ function scene:create( event )
             overFile = "Images/CreditsButtonPressedJosias@2x.png",
 
             -- When the button is released, call the Credits transition function
-            onRelease = CreditsTransition
+            onRelease = HomeTransition
         } ) 
-
-    -- Creating Credits Button
-    extraButton = widget.newButton( 
-        {
-            --Set its position on the screen relative to the screen size
-            x = display.contentWidth/2,
-            y = display.contentHeight*7/10,
-            width = 200,
-            height = 100,
-
-            --Insert the images here
-            defaultFile = "Images/ExtraLevelsUnpressedLogan.png",
-            overFile ="Images/ExtraLevelsPressedLogan.png",
-
-
-
-            -- When the button is released, call the Credits transition function
-            onRelease = ExtraLevelTransition
-        } ) 
-
 
      -- Creating instruction Button
-    instructionButton = widget.newButton( 
-        {   
-            -- Set its position on the screen relative to the screen size
-            x = display.contentWidth*4/5,
-            y = display.contentHeight*8/10,
-            width = 200,
-            height = 100,
-
-            --Insert the images here
-            defaultFile = "Images/InstructionsButtonUnpressed.png",
-            overFile = "Images/InstructionsButtonPressed.png",
-
-            -- When the button is released, call the instruction screen transition function
-            onRelease = Instructions2ScreenTransition          
-        } )
 
 
     -----------------------------------------------------------------------------------------
     
     -- Creating level 3 Button
-    level3Button = widget.newButton( 
+    level5Button = widget.newButton( 
         {
             -- Set its position on the screen relative to the screen size
             x = display.contentWidth*4/5,
@@ -241,11 +175,11 @@ function scene:create( event )
             overFile = "Images/level3ButtonPressedMelody@2x.png",
 
             -- When the button is released, call the level1 transition function
-           onRelease = Level3Transition
+           onRelease = Level5Transition
         } ) 
 
     -- Creating level 4 Button
-    level4Button = widget.newButton( 
+    level6Button = widget.newButton( 
         {
             -- Set its position on the screen relative to the screen size
             x = display.contentWidth*4/5,
@@ -258,60 +192,7 @@ function scene:create( event )
             overFile = "Images/level4ButtonPressedMelody@2x.png",
 
             -- When the button is released, call the level1 transition function
-           onRelease = Level4Transition
-        } ) 
-
-    -- Creating instructions Button
-    instructionbakingButton = widget.newButton( 
-        {   
-            -- Set its position on the screen relative to the screen size
-             x = display.contentWidth*1/5,
-            y = display.contentHeight*8/10,
-            width = 200,
-            height = 100,
-
-            --Insert the images here
-            defaultFile = "Images/InstructionsButtonUnpressed.png",
-            overFile = "Images/InstructionsButtonPressed.png",
-
-            -- When the button is released, call the instructions screen transition function
-            onRelease = InstructionsScreenTransition          
-        } )
-
-    -----------------------------------------------------------------------------------------
-    
-     -- Creating Play Button
-    level1Button = widget.newButton( 
-        {
-            -- Set its position on the screen relative to the screen size
-            x = display.contentWidth*1/5,
-            y = display.contentHeight*4/10,
-            width = 200,
-            height = 100,
-
-            -- Insert the images here
-            defaultFile = "Images/level1ButtonUnpressedMelody@2x.png",
-            overFile = "Images/level1ButtonPressedMelody@2x.png",
-
-            -- When the button is released, call the level1 transition function
-           onRelease = Level1Transition
-        } ) 
-
-    -- Creating Play Button
-    level2Button = widget.newButton( 
-        {
-            -- Set its position on the screen relative to the screen size
-            x = display.contentWidth*1/5,
-            y = display.contentHeight*6/10,
-            width = 200,
-            height = 100,
-
-            -- Insert the images here
-            defaultFile = "Images/level2ButtonUnpressedMelody@2x.png",
-            overFile = "Images/level2ButtonPressedMelody@2x.png",
-
-            -- When the button is released, call the level1 transition function
-           onRelease = Level2Transition
+           onRelease = Level6Transition
         } ) 
 
     
@@ -320,16 +201,11 @@ function scene:create( event )
 
 
     -- Associating button widgets with this scene
-    sceneGroup:insert( creditsButton )
     sceneGroup:insert( MuteButton )
     sceneGroup:insert( UnmuteButton )
-    sceneGroup:insert( level3Button )
-    sceneGroup:insert( level4Button )
-    sceneGroup:insert( instructionButton )
-    sceneGroup:insert( level1Button )
-    sceneGroup:insert( level2Button )
-    sceneGroup:insert( instructionbakingButton )
-    sceneGroup:insert( extraButton)
+    sceneGroup:insert( level5Button )
+    sceneGroup:insert( level6Button )
+    sceneGroup:insert( homeButton )
    
     -- INSERT INSTRUCTIONS BUTTON INTO SCENE GROUP
 
