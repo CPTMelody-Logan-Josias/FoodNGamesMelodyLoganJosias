@@ -467,7 +467,7 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc
-        WinChannel = audio.play( Win )
+        audio.play( Win )
         AddTextListeners ( )
         MakeCakeVisible()
         CakePosition()
@@ -500,7 +500,7 @@ function scene:hide( event )
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
-        audio.stop( WinChannel )
+        audio.pause( WinChannel )
         RemoveTextListeners()
     end
 
