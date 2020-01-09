@@ -1,75 +1,70 @@
------------------------------------------------------------------------------------------
+--hide status bar
+display.setStatusBar (display.HiddenStatusBar)
+
+--display the soccer field
+---------------------------------------------------------------------------------
 --
--- game_level1.lua
--- Created by: Daniel
+-- FoodNGames Level 4 - soccer
+-- Created by: Logan
 -- Date: Nov. 22nd, 2014
--- Description: This is the level 1 screen of the game.
------------------------------------------------------------------------------------------
+-- Description: This is the level 3 screen of the game.
+----------------------------------------------------------------------------------------
 
 
 -- Use Composer Library
 local composer = require( "composer" )
 
------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 -- Use Widget Library
 local widget = require( "widget" )
 
------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
--- Naming Scene
-sceneName = "level3_screen"
+ --Naming Scene
+sceneName = "level5_screen"
 
--- Creating Scene Object
+ --Creating Scene Object
 local scene = composer.newScene( sceneName )
 
------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
--- sounds
-local soccerSound = audio.loadSound( "Sounds/soccerSound.mp3")
-local soccerSoundChannel
-local correctSound = audio.loadSound( "Sounds/correctSound.mp3")
-local correctSoundChannel
-local wrongSound = audio.loadSound("Sounds/wrongSound.mp3")
-local wrongSoundChannel
-
--- hearts 
-local lives = 4 
-local heart1 
-local heart2 
-local heart3 
-local heart4 
-
--- The background image and soccer ball for this scene
+-- The background image, soccer ball and player/character for this scene+local bkg_image
+local soccerBall
+local player
 local bkg_image
-local soccerball
 
 --the text that displays the question
-local questionText 
-local correctObject
-local incorrectObject
+local questionText
+local points = 0
+local pointsText
+local lives = 4
+local livesText
+
 --the alternate numbers randomly generated
-local correctAnswer
+local correctAnswer = 0
 local alternateAnswer1
-local alternateAnswer2    
+local alternateAnswer2
+local correctText
+local incorrectText
 
 -- Variables containing the user answer and the actual answer
 local userAnswer
 
--- boolean variables telling me which answer box was touched
+-- boolean variables telling me which answer box wa touched
 local answerboxAlreadyTouched = false
 local alternateAnswerBox1AlreadyTouched = false
 local alternateAnswerBox2AlreadyTouched = false
 
---create textboxes holding answer and alternate answers 
-local answerbox
+--create textboxes holding answer and alternate ansers 
+local answerBox
 local alternateAnswerBox1
 local alternateAnswerBox2
 
--- create variables that will hold the previous x- and y-positions so that 
--- each answer will return back to its previous position after it is moved
+-- create variables that will hold the previous x- nd y-positions so that 
+-- each answer will return back to its previous postion after it is moved
 local answerboxPreviousY
 local alternateAnswerBox1PreviousY
 local alternateAnswerBox2PreviousY
@@ -84,112 +79,53 @@ local userAnswerBoxPlaceholder
 -- sound effects
 local correctSound
 local booSound
-local points = 0
-
 
 --scroll speed for the ball to Score
 local scrollXSpeedCorrect = 14.5
 local scrollYSpeedCorrect = -17
 local scrollXSpeedIncorrect = -8
 local scrollYSpeedIncorrect = -20
-local ballPosition
 
+-----------------------------------------------------------------------------------------
+--SOUNDS
+-----------------------------------------------------------------------------------------
 
+local soccerSound = audio.loadSound("Sounds/soccerSound.mp3")
+local soccerSoundChannel
+
+local correctSound = audio.loadSound( "Sounds/correctSound.mp3")
+local correctSoundChannel
+
+local wrongSound = audio.loadSound("Sounds/wrongSound.mp3")
+local wrongSoundChannel
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
-local function BackTransition()
-    composer.gotoScene( "mainmenu", {effect = "flipFadeOutIn", time = 500})
-end 
 
 local function DisplayQuestion()
-    local randomOperator 
     local randomNumber1
     local randomNumber2
-    local tempRandomNumber
 
     --set random numbers
-    randomNumber1 = math.random(2, 15)
-    randomNumber2 = math.random(2, 15)
-    randomOperator = math.random(1, 2)
+    randomNumber1 = math.random(1, 9)
+    randomNumber2 = math.random(1, 9)
 
-    if (randomOperator == 1) then
-       soccerball.x = ballPosition.x
-       soccerball.y = ballPosition.y
-       
+    --calculate answer
+    correctAnswer = randomNumber1 * randomNumber2
 
-        --calculate answer
-        correctAnswer = randomNumber1 + randomNumber2
+    --change question text in relation to answer
+    questionText.text = randomNumber1 .. " x " .. randomNumber2 .. " = " 
 
-        --change question text in relation to answer
-        questionText.text = randomNumber1 .. " + " .. randomNumber2 .. " = " 
+    -- put the correct answer into the answerbox
+    answerBox.text = correctAnswer
 
-        -- put the correct answer into the answerbox
-        answerbox.text = correctAnswer
-
-        -- make it possible to click on the answers again
-        answerboxAlreadyTouched = false
-        alternateAnswerBox1AlreadyTouched = false
-        alternateAnswerBox2AlreadyTouched = false
-    elseif (randomOperator == 2) then
-       soccerball.x = ballPosition.x
-       soccerball.y = ballPosition.y
-
-        if (randomNumber1 < randomNumber2)then
-            tempRandomNumber = randomNumber1
-            randomNumber1 = randomNumber2
-            randomNumber2 = tempRandomNumber
-        end          
-    
-        -- calculate answer 
-        correctAnswer = randomNumber1 - randomNumber2
-
-        -- change the question text in relation to answer 
-        questionText.text = randomNumber1 .. " - " .. randomNumber2 .. " = "
-
-        -- put the correct answer intio the answerbox
-        answerbox.text = correctAnswer
-
-        -- make it possible to click on the answers again
-        answerboxAlreadyTouched = false
-        alternateAnswerBox1AlreadyTouched = false
-        alternateAnswerBox2AlreadyTouched = false        
-    end 
+    -- make it possible to click on the answers again
+    answerboxAlreadyTouched = false
+    alternateAnswerBox1AlreadyTouched = false
+    alternateAnswerBox2AlreadyTouched = false
 
 end
-
-local function HideCorrect()
-    correctObject.isVisible = false
-    DisplayQuestion()
-end
-
-local function Hideincorrect()
-    incorrectObject.isVisible = false
-    DisplayQuestion()
-end    
-
-
---function to move the soccer ball once they get the answer right
-local function MovesoccerballCorrect()
-    if (soccerball.y < 100) then
-        Runtime:removeEventListener("enterFrame", MovesoccerballCorrect)
-    else
-        soccerball.x = soccerball.x + scrollXSpeedCorrect
-        soccerball.y = soccerball.y + scrollYSpeedCorrect
-    end
-end
-
-local function MovesoccerballIncorrect()
-    if (soccerball.y < 0) then
-        Runtime:removeEventListener("enterFrame", MovesoccerballIncorrect)
-    else
-        soccerball.x = soccerball.x + scrollXSpeedIncorrect
-        soccerball.y = soccerball.y + scrollYSpeedIncorrect
-    end
-end
-
-
 
 local function DetermineAlternateAnswers()    
 
@@ -197,6 +133,7 @@ local function DetermineAlternateAnswers()
     -- generate incorrect answer and set it in the textbox
     alternateAnswer1 = correctAnswer + math.random(3, 5)
     alternateAnswerBox1.text = alternateAnswer1
+    
 
     -- generate incorrect answer and set it in the textbox
     alternateAnswer2 = correctAnswer - math.random(1, 2)
@@ -206,7 +143,7 @@ local function DetermineAlternateAnswers()
 -- RESET ALL X POSITIONS OF ANSWER BOXES (because the x-position is changed when it is
 -- placed into the black box)
 -----------------------------------------------------------------------------------------
-    answerbox.x = display.contentWidth * 0.9
+    answerBox.x = display.contentWidth * 0.9
     alternateAnswerBox1.x = display.contentWidth * 0.9
     alternateAnswerBox2.x = display.contentWidth * 0.9
 
@@ -224,7 +161,7 @@ local function PositionAnswers()
     -- random position 1
     if (randomPosition == 1) then
         -- set the new y-positions of each of the answers
-        answerbox.y = display.contentHeight * 0.4
+        answerBox.y = display.contentHeight * 0.4
 
         --alternateAnswerBox2
         alternateAnswerBox2.y = display.contentHeight * 0.70
@@ -236,27 +173,27 @@ local function PositionAnswers()
         --remembering their positions to return the answer in case it's wrong
         alternateAnswerBox1PreviousY = alternateAnswerBox1.y
         alternateAnswerBox2PreviousY = alternateAnswerBox2.y
-        answerboxPreviousY = answerbox.y 
+        answerboxPreviousY = answerBox.y 
 
     -- random position 2
     elseif (randomPosition == 2) then
 
-        answerbox.y = display.contentHeight * 0.55
+        answerBox.y = display.contentHeight * 0.55
         
         --alternateAnswerBox2
         alternateAnswerBox2.y = display.contentHeight * 0.4
 
-        --alternateAnswerBox1AlreadyTouched
+        --alternateAnswerBox1
         alternateAnswerBox1.y = display.contentHeight * 0.7
 
         --remembering their positions to return the answer in case it's wrong
         alternateAnswerBox1PreviousY = alternateAnswerBox1.y
         alternateAnswerBox2PreviousY = alternateAnswerBox2.y
-        answerboxPreviousY = answerbox.y 
+        answerboxPreviousY = answerBox.y 
 
     -- random position 3
-     elseif (randomPosition == 3) then
-        answerbox.y = display.contentHeight * 0.70
+    elseif (randomPosition == 3) then
+        answerBox.y = display.contentHeight * 0.70
 
         --alternateAnswerBox2
         alternateAnswerBox2.y = display.contentHeight * 0.55
@@ -267,88 +204,96 @@ local function PositionAnswers()
         --remembering their positions to return the answer in case it's wrong
         alternateAnswerBox1PreviousY = alternateAnswerBox1.y
         alternateAnswerBox2PreviousY = alternateAnswerBox2.y
-        answerboxPreviousY = answerbox.y 
+        answerboxPreviousY = answerBox.y 
     end
 end
 
+--hide the correct text
+local function HideCorrectText()
+    correctText.isVisible = false
+end
+
+--hide the incorrect answer text
+local function HideIncorrectText()
+    incorrectText.isVisible = false
+end
+
+--function to move the soccer ball once they get the answer right
+local function MoveSoccerBallCorrect()
+    if (soccerBall.y < 100) then
+        Runtime:removeEventListener("enterFrame", MoveSoccerBallCorrect)
+    else
+        soccerBall.x = soccerBall.x + scrollXSpeedCorrect
+        soccerBall.y = soccerBall.y + scrollYSpeedCorrect
+    end
+end
+
+local function MoveSoccerBallIncorrect()
+    if (soccerBall.y < 0) then
+        Runtime:removeEventListener("enterFrame", MoveSoccerBallIncorrect)
+    else
+        soccerBall.x = soccerBall.x + scrollXSpeedIncorrect
+        soccerBall.y = soccerBall.y + scrollYSpeedIncorrect
+    end
+end
 
 -- Function to Restart Level 1
-local function RestartLevel3()
+local function RestartLevel1()
+    soccerBall.x = display.contentWidth*0.385
+    soccerBall.y = display.contentHeight * 12/20
     DisplayQuestion()
     DetermineAlternateAnswers()
     PositionAnswers()    
 end
 
+
+local function Lives()
+    if (lives == 0) then
+        composer.gotoScene("youLose", {effect = "fade", time = 500})
+    end
+end
+
+
 -- Function to Check User Input
 local function CheckUserAnswerInput()
-
-    if (userAnswer == correctAnswer)then
-        correctObject.isVisible = true
-
-        correctSoundChannel = audio.play(correctSound)
-        timer.performWithDelay(2000, HideCorrect)
-        
-
-        points = points + 1
-
-            -- update it in the display object
-            pointsText.text = "Points = " .. points 
-
-        if ( points == 5 ) then 
-            composer.gotoScene ("you_win" {effect = "fade", time = 500})
-            heart2.isVisible = false
-            heart3.isvisible = false
-            heart4.isvisible = false
-            incorrectObject.isVisible = false 
-            correctObject.isVisible = false 
-            questionText.isVisible = false  
-            heart3.isVisible = false 
-            heart4.isVisible = false
-            correctSoundChannel = audio.play(correctSound)
-            timer.performWithDelay(2000, HideCorrect)            
-        end 
-        Runtime:addEventListener("enterFrame", MovesoccerballCorrect)     
-    else
-
-        
-        lives = lives - 1
-        secondsLeft = totalSeconds
-        incorrectObject.isVisible = true 
-        wrongSoundChannel = audio.play(wrongSound)
-        timer.performWithDelay(2000, Hideincorrect)
-
-        if (lives == 3) then
-            heart4.isVisible = false
-             
-        elseif (lives == 2) then
-            heart3.isVisible = false
-
-        elseif (lives == 1) then
-            heart2.isVisible = false
-
-        elseif (lives == 0) then 
-            heart1.isVisible = false 
-        end
-
-        
-
-            if ( lives == 0 ) then 
-                gameOver = display.newImageRect("Images/Losescreen.png", 1304, 769)
-                gameOver.x = display.contentCenterX
-                gameOver.y = display.contentCenterY
-                wrongSoundChannel = audio.play(wrongSound)
-                timer.performWithDelay(2000, Hideincorrect)                
-            end     
-
-        Runtime:addEventListener("enterFrame", MovesoccerballIncorrect)          
-
-            -- clear text        
-
-    end    
-          
-    timer.performWithDelay(1600, RestartLevel3) 
+    print("Executing CheckUserAnswerInput")
     
+    if (userAnswer == correctAnswer) then
+        points = points + 1
+        pointsText.text = "Points: " .. points
+        correctText.isVisible = true
+        correctSoundChannel = audio.play ( correctSound )
+        timer.performWithDelay(1600, HideCorrectText)
+
+        Runtime:addEventListener("enterFrame", MoveSoccerBallCorrect) 
+        
+    else 
+        lives = lives -1
+        livesText.text = "Lives: " .. lives
+        Lives()
+        print("correctAnswer = ".. correctAnswer)
+        incorrectText.isVisible = true
+        incorrectText.text = "Incorrect! The correct answer is " .. correctAnswer .. "!"
+        timer.performWithDelay(1600, HideIncorrectText)
+
+        Runtime:addEventListener("enterFrame", MoveSoccerBallIncorrect)
+    end
+
+    if (points == 5) then
+        composer.gotoScene("you_win", {effect = "fade", time = 500})
+    else
+       timer.performWithDelay(1800, RestartLevel1)
+    end   
 end
+
+
+local function Lives()
+    if (lives == 0) then
+        composer.gotoScene("you_lose", {effect = "fade", time = 500})
+    end
+end
+
+
 
 local function TouchListenerAnswerbox(touch)
     --only work if none of the other boxes have been touched
@@ -359,12 +304,11 @@ local function TouchListenerAnswerbox(touch)
 
             --let other boxes know it has been clicked
             answerboxAlreadyTouched = true
-
         --drag the answer to follow the mouse
         elseif (touch.phase == "moved") then
             
-            answerbox.x = touch.x
-            answerbox.y = touch.y
+            answerBox.x = touch.x
+            answerBox.y = touch.y
 
         -- this occurs when they release the mouse
         elseif (touch.phase == "ended") then
@@ -372,27 +316,23 @@ local function TouchListenerAnswerbox(touch)
             answerboxAlreadyTouched = false
 
               -- if the number is dragged into the userAnswerBox, place it in the center of it
-            if (((userAnswerBoxPlaceholder.x - userAnswerBoxPlaceholder.width/2) < answerbox.x ) and
-                ((userAnswerBoxPlaceholder.x + userAnswerBoxPlaceholder.width/2) > answerbox.x ) and 
-                ((userAnswerBoxPlaceholder.y - userAnswerBoxPlaceholder.height/2) < answerbox.y ) and 
-                ((userAnswerBoxPlaceholder.y + userAnswerBoxPlaceholder.height/2) > answerbox.y ) ) then
+            if (((userAnswerBoxPlaceholder.x - userAnswerBoxPlaceholder.width/2) < answerBox.x ) and
+                ((userAnswerBoxPlaceholder.x + userAnswerBoxPlaceholder.width/2) > answerBox.x ) and
+                ((userAnswerBoxPlaceholder.y - userAnswerBoxPlaceholder.height/2) < answerBox.y ) and 
+                ((userAnswerBoxPlaceholder.y + userAnswerBoxPlaceholder.height/2) > answerBox.y ) ) then
 
                 -- setting the position of the number to be in the center of the box
-                answerbox.x = userAnswerBoxPlaceholder.x
-                answerbox.y = userAnswerBoxPlaceholder.y
+                answerBox.x = userAnswerBoxPlaceholder.x
+                answerBox.y = userAnswerBoxPlaceholder.y
                 userAnswer = correctAnswer
-
-                soccerball.x = ballPosition.x
-                soccerball.y = ballPosition.y
 
                 -- call the function to check if the user's input is correct or not
                 CheckUserAnswerInput()
-                
 
             --else make box go back to where it was
             else
-                answerbox.x = answerboxPreviousX
-                answerbox.y = answerboxPreviousY
+                answerBox.x = answerboxPreviousX
+                answerBox.y = answerboxPreviousY
             end
         end
     end                
@@ -424,15 +364,10 @@ local function TouchListenerAnswerBox1(touch)
                 alternateAnswerBox1.x = userAnswerBoxPlaceholder.x
                 alternateAnswerBox1.y = userAnswerBoxPlaceholder.y
 
-                soccerball.x = ballPosition.x
-                soccerball.y = ballPosition.y
-
-
                 userAnswer = alternateAnswer1
 
                 -- call the function to check if the user's input is correct or not
                 CheckUserAnswerInput()
-                
 
             --else make box go back to where it was
             else
@@ -470,15 +405,9 @@ local function TouchListenerAnswerBox2(touch)
                 alternateAnswerBox2.y = userAnswerBoxPlaceholder.y
                 userAnswer = alternateAnswer2
 
-                soccerball.x = ballPosition.x
-                soccerball.y = ballPosition.y
-
-
-
                 -- call the function to check if the user's input is correct or not
                 CheckUserAnswerInput()
-               
- 
+
             --else make box go back to where it was
             else
                 alternateAnswerBox2.x = alternateAnswerBox2PreviousX
@@ -490,19 +419,17 @@ end
 
 -- Function that Adds Listeners to each answer box
 local function AddAnswerBoxEventListeners()
-    answerbox:addEventListener("touch", TouchListenerAnswerbox)
+    answerBox:addEventListener("touch", TouchListenerAnswerbox)
     alternateAnswerBox1:addEventListener("touch", TouchListenerAnswerBox1)
     alternateAnswerBox2:addEventListener("touch", TouchListenerAnswerBox2)
 end 
 
 -- Function that Removes Listeners to each answer box
 local function RemoveAnswerBoxEventListeners()
-    answerbox:removeEventListener("touch", TouchListenerAnswerbox)
+    answerBox:removeEventListener("touch", TouchListenerAnswerbox)
     alternateAnswerBox1:removeEventListener("touch", TouchListenerAnswerBox1)
     alternateAnswerBox2:removeEventListener("touch", TouchListenerAnswerBox2)
-end
-
-
+end 
 
 ----------------------------------------------------------------------------------
 -- GLOBAL FUNCTIONS
@@ -520,37 +447,14 @@ function scene:create( event )
     local sceneGroup = self.view
 
     ----------------------------------------------------------------------------------
-    -- Creating Back Button
-    backButton = widget.newButton( 
-    {
-        -- Setting Position
-        x = display.contentWidth*0.5/5,
-        y = display.contentHeight*0.5/5,
-        -- sets the size of the button
-        width = 150,
-        height = 75,
-
-        -- Setting Dimensions
-        -- width = 1000,
-        -- height = 106,
-
-        -- Setting Visual Properties
-        defaultFile = "Images/HomeUnpressedMelody@2x.png",
-        overFile = "Images/HomepressedMelody@2x.png",
-
-        -- Setting Functional Properties
-        onRelease = BackTransition
-
-    } )
     ----------------------------------------------------------------------------------
     --Inserting backgroud image and lives
     ----------------------------------------------------------------------------------
 
-
     -- Insert the background image
-    bkg_image = display.newImageRect("Images/Level3ScreenLogan.png", 2048, 1536)
-    bkg_image.anchorX = 0
-    bkg_image.anchorY = 0
+    bkg_image = display.newImageRect("Images/Level3ScreenLogan.png", 1024, 768)
+    bkg_image.x = display.contentCenterX
+    bkg_image.y = display.contentCenterY
     bkg_image.width = display.contentWidth
     bkg_image.height = display.contentHeight
 
@@ -558,16 +462,17 @@ function scene:create( event )
     questionText = display.newText( "" , 0, 0, nil, 100)
     questionText.x = display.contentWidth * 0.3
     questionText.y = display.contentHeight * 0.9
+    questionText:setTextColor(1/255, 1/255, 1/255)
 
     -- create the soccer ball and place it on the scene
-    soccerball = display.newImageRect("Images/soccerball.png", 60, 60, 0, 0)
-    soccerball.x = display.contentWidth*0.385
-    soccerball.y = display.contentHeight * 12/20
+    soccerBall = display.newImageRect("Images/soccerball.png", 60, 60, 0, 0)
+    soccerBall.x = display.contentWidth*0.385
+    soccerBall.y = display.contentHeight * 12/20
 
-    -- create Character 
-    character = display.newImageRect("Images/SoccerCharacterLogan@2x.png", 250, 250, 100, 100)
-    character.x = display.contentWidth*0.300
-    character.y = display.contentHeight * 10/18
+    --insert the character into the scene of the game
+    player = display.newImageRect("Images/SoccerCharacterLogan@2x.png", 200, 300, 0, 0)
+    player.x = display.contentWidth/3
+    player.y = display.contentHeight/1.9
 
     -- boolean variables stating whether or not the answer was touched
     answerboxAlreadyTouched = false
@@ -575,9 +480,12 @@ function scene:create( event )
     alternateAnswerBox2AlreadyTouched = false
 
     --create answerbox alternate answers and the boxes to show them
-    answerbox = display.newText("", display.contentWidth * 0.9, 0, nil, 100)
+    answerBox = display.newText("", display.contentWidth * 0.9, 0, nil, 100)
+    answerBox:setTextColor(1/255, 1/255, 1/255)
     alternateAnswerBox1 = display.newText("", display.contentWidth * 0.9, 0, nil, 100)
+    alternateAnswerBox1:setTextColor(1/255, 1/255, 1/255)
     alternateAnswerBox2 = display.newText("", display.contentWidth * 0.9, 0, nil, 100)
+    alternateAnswerBox2:setTextColor(1/255, 1/255, 1/255)
 
     -- set the x positions of each of the answer boxes
     answerboxPreviousX = display.contentWidth * 0.9
@@ -589,58 +497,46 @@ function scene:create( event )
     userAnswerBoxPlaceholder = display.newImageRect("Images/userAnswerBoxPlaceholder.png",  130, 130, 0, 0)
     userAnswerBoxPlaceholder.x = display.contentWidth * 0.6
     userAnswerBoxPlaceholder.y = display.contentHeight * 0.9
-    -- create the lives to display ont the screen 
-    heart1 = display.newImageRect("Images/heart.png", 50, 50)
-    heart1.x = display.contentWidth  * 7.8/8
-    heart1.y = display.contentHeight * 1/7
 
-    heart2 = display.newImageRect("Images/heart.png", 50, 50)
-    heart2.x = display.contentWidth * 7.4/8
-    heart2.y = display.contentHeight * 1/7
+    --the amounts of points shown on the screen
+    pointsText = display.newText("Points: " .. points .. "", 0, 0, nil, 70)
+    pointsText.x = display.contentWidth/6
+    pointsText.y = display.contentHeight/22
+    pointsText:setTextColor(1/255, 1/255, 1/255)
 
-    heart3 = display.newImageRect("Images/heart.png", 50, 50)
-    heart3.x = display.contentWidth * 7/8
-    heart3.y = display.contentHeight * 1/7
+    livesText = display.newText("Lives: " .. lives .. "", 0, 0, nil, 55)
+    livesText.x = display.contentWidth/1.12
+    livesText.y = display.contentHeight/22
+    livesText:setTextColor(1/255, 1/255, 1/255)
 
-    heart4 = display.newImageRect("Images/heart.png", 50, 50)
-    heart4.x = display.contentWidth * 6.6/8
-    heart4.y = display.contentHeight * 1/7
-    
-    correctObject = display.newText( "Correct", display.contentWidth/2, display.contentHeight*2/3, nil, 50)
-    correctObject.isVisible = false
+    --correct answer text
+    correctText = display.newText("Correct! Great Job!", 0, 0, nil, 50)
+    correctText.x = display.contentWidth/2
+    correctText.y = display.contentHeight/3
+    correctText:setTextColor(1/255, 1/255, 1/255)
+    correctText.isVisible = false
 
-    -- Create the incorrect text object and make it visible
-    incorrectObject = display.newText( "incorrect", display.contentWidth/2, display.contentHeight*2/3, nil, 50)
-    incorrectObject.isVisible = false
-
-    -- display the amount of points as text object
-    pointsText = display.newText("Points = " .. points, display.contentWidth/3, display.contentHeight/3, nil,50)
-
-
-    ballPosition = display.newImageRect("Images/soccerball.png", 60, 60, 0, 0)
-    ballPosition.x = display.contentWidth*0.385 
-    ballPosition.y = display.contentHeight * 12/20
-    ballPosition.isvisible = false
+    incorrectText = display.newText("Incorrect! The correct answer was " .. correctAnswer .. "!", 0, 0, nil, 50)
+    incorrectText.x = display.contentWidth/2
+    incorrectText.y = display.contentHeight/3
+    incorrectText:setTextColor(1/255, 1/255, 1/255)
+    incorrectText.isVisible = false
 
     ----------------------------------------------------------------------------------
-
-    sceneGroup:insert( ballPosition )
+    --adding objects to the scene group
     ----------------------------------------------------------------------------------
 
     sceneGroup:insert( bkg_image ) 
     sceneGroup:insert( questionText ) 
     sceneGroup:insert( userAnswerBoxPlaceholder )
-    sceneGroup:insert( answerbox )
+    sceneGroup:insert( answerBox )
     sceneGroup:insert( alternateAnswerBox1 )
     sceneGroup:insert( alternateAnswerBox2 )
-    sceneGroup:insert( soccerball )
-    sceneGroup:insert( backButton )
-    sceneGroup:insert( character )
-    sceneGroup:insert( heart1 )
-    sceneGroup:insert( heart2 )
-    sceneGroup:insert( heart3 )
-    sceneGroup:insert( heart4 )
+    sceneGroup:insert( soccerBall )
+    sceneGroup:insert( player )
     sceneGroup:insert( pointsText )
+    sceneGroup:insert( correctText )
+    sceneGroup:insert( livesText )
 
 end --function scene:create( event )
 
@@ -664,9 +560,9 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
-        RestartLevel3()
-        AddAnswerBoxEventListeners() 
-        soccerSoundChannel = audio.play(soccerSound)
+        RestartLevel1()
+        AddAnswerBoxEventListeners()
+        soccerSoundChannel = audio.play ( soccerSound, {loops = -1})
 
     end
 
