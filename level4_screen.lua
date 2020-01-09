@@ -186,7 +186,7 @@ local function PositionAnswers()
         answerboxPreviousY = answerBox.y 
 
     -- random position 3
-     elseif (randomPosition == 3) then
+    elseif (randomPosition == 3) then
         answerBox.y = display.contentHeight * 0.70
 
         --alternateAnswerBox2
@@ -240,6 +240,14 @@ local function RestartLevel1()
     PositionAnswers()    
 end
 
+
+local function Lives()
+    if (lives == 0) then
+        composer.gotoScene("youLose", {effect = "fade", time = 500})
+    end
+end
+
+
 -- Function to Check User Input
 local function CheckUserAnswerInput()
     print("Executing CheckUserAnswerInput")
@@ -254,7 +262,11 @@ local function CheckUserAnswerInput()
         
     else 
         lives = lives -1
+
         livesText.text = "Lives: " .. points
+
+        livesText.text = "Lives: " .. lives
+
         Lives()
         print("correctAnswer = ".. correctAnswer)
         incorrectText.isVisible = true
@@ -271,11 +283,15 @@ local function CheckUserAnswerInput()
     end   
 end
 
+
 local function Lives()
     if (lives == 0) then
         composer.gotoScene("you_lose", {effect = "fade", time = 500})
     end
 end
+
+
+
 local function TouchListenerAnswerbox(touch)
     --only work if none of the other boxes have been touched
     if (alternateAnswerBox1AlreadyTouched == false) and 
@@ -488,6 +504,9 @@ function scene:create( event )
     livesText = display.newText("Lives: " .. lives .. "", 0, 0, nil, 40)
     livesText.x = display.contentWidth/600
     livesText.y = display.contentHeight/500
+
+    livesText.x = display.contentWidth/1.1
+    livesText.y = display.contentHeight/4
     livesText:setTextColor(1/255, 1/255, 1/255)
 
     --correct answer text
@@ -517,6 +536,7 @@ function scene:create( event )
     sceneGroup:insert( player )
     sceneGroup:insert( pointsText )
     sceneGroup:insert( correctText )
+    sceneGroup:insert( livesText )
 
 end --function scene:create( event )
 

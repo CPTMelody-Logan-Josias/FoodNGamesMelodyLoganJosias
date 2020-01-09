@@ -86,12 +86,14 @@ local correctSound
 local booSound
 local points = 0
 
+
 --scroll speed for the ball to Score
 local scrollXSpeedCorrect = 14.5
 local scrollYSpeedCorrect = -17
 local scrollXSpeedIncorrect = -8
 local scrollYSpeedIncorrect = -20
 local ballPosition
+
 
 
 -----------------------------------------------------------------------------------------
@@ -115,6 +117,7 @@ local function DisplayQuestion()
     if (randomOperator == 1) then
        soccerball.x = ballPosition.x
        soccerball.y = ballPosition.y
+       
 
         --calculate answer
         correctAnswer = randomNumber1 + randomNumber2
@@ -166,6 +169,7 @@ local function Hideincorrect()
     DisplayQuestion()
 end    
 
+
 --function to move the soccer ball once they get the answer right
 local function MovesoccerballCorrect()
     if (soccerball.y < 100) then
@@ -184,6 +188,7 @@ local function MovesoccerballIncorrect()
         soccerball.y = soccerball.y + scrollYSpeedIncorrect
     end
 end
+
 
 
 local function DetermineAlternateAnswers()    
@@ -282,7 +287,6 @@ local function CheckUserAnswerInput()
 
         correctSoundChannel = audio.play(correctSound)
         timer.performWithDelay(2000, HideCorrect)
-
         
 
         points = points + 1
@@ -339,8 +343,10 @@ local function CheckUserAnswerInput()
                 timer.performWithDelay(2000, Hideincorrect)                
             end     
 
-
         Runtime:addEventListener("enterFrame", MovesoccerballIncorrect)          
+
+            -- clear text        
+
     end    
           
     timer.performWithDelay(1600, RestartLevel3) 
@@ -378,6 +384,7 @@ local function TouchListenerAnswerbox(touch)
                 answerbox.x = userAnswerBoxPlaceholder.x
                 answerbox.y = userAnswerBoxPlaceholder.y
                 userAnswer = correctAnswer
+
                 soccerball.x = ballPosition.x
                 soccerball.y = ballPosition.y
 
@@ -419,8 +426,10 @@ local function TouchListenerAnswerBox1(touch)
 
                 alternateAnswerBox1.x = userAnswerBoxPlaceholder.x
                 alternateAnswerBox1.y = userAnswerBoxPlaceholder.y
+
                 soccerball.x = ballPosition.x
                 soccerball.y = ballPosition.y
+
 
                 userAnswer = alternateAnswer1
 
@@ -463,8 +472,12 @@ local function TouchListenerAnswerBox2(touch)
                 alternateAnswerBox2.x = userAnswerBoxPlaceholder.x
                 alternateAnswerBox2.y = userAnswerBoxPlaceholder.y
                 userAnswer = alternateAnswer2
+
                 soccerball.x = ballPosition.x
                 soccerball.y = ballPosition.y
+
+
+
                 -- call the function to check if the user's input is correct or not
                 CheckUserAnswerInput()
                
@@ -606,6 +619,7 @@ function scene:create( event )
     -- display the amount of points as text object
     pointsText = display.newText("Points = " .. points, display.contentWidth/3, display.contentHeight/3, nil,50)
 
+
     ballPosition = display.newImageRect("Images/soccerball.png", 60, 60, 0, 0)
     ballPosition.x = display.contentWidth*0.385 
     ballPosition.y = display.contentHeight * 12/20
@@ -614,6 +628,8 @@ function scene:create( event )
     ----------------------------------------------------------------------------------
 
     sceneGroup:insert( ballPosition )
+    ----------------------------------------------------------------------------------
+
     sceneGroup:insert( bkg_image ) 
     sceneGroup:insert( questionText ) 
     sceneGroup:insert( userAnswerBoxPlaceholder )
