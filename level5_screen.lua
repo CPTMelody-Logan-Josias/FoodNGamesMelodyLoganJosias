@@ -85,6 +85,7 @@ local userAnswerBoxPlaceholder
 local correctSound
 local booSound
 local points = 0
+local backButton
 
 --scroll speed for the ball to Score
 local scrollXSpeedCorrect = 14.5
