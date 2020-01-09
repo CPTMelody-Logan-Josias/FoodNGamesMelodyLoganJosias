@@ -501,12 +501,9 @@ function scene:create( event )
     pointsText.y = display.contentHeight/22
     pointsText:setTextColor(1/255, 1/255, 1/255)
 
-    livesText = display.newText("Lives: " .. lives .. "", 0, 0, nil, 40)
-    livesText.x = display.contentWidth/600
-    livesText.y = display.contentHeight/500
-
-    livesText.x = display.contentWidth/1.1
-    livesText.y = display.contentHeight/4
+    livesText = display.newText("Lives: " .. lives .. "", 0, 0, nil, 55)
+    livesText.x = display.contentWidth/1.12
+    livesText.y = display.contentHeight/22
     livesText:setTextColor(1/255, 1/255, 1/255)
 
     --correct answer text

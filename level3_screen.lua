@@ -295,10 +295,7 @@ local function CheckUserAnswerInput()
             pointsText.text = "Points = " .. points 
 
         if ( points == 5 ) then 
-            youWin = display.newImageRect("Images/Winscreen.png", 1304, 769)
-            youWin.x = display.contentCenterX
-            youWin.y = display.contentCenterY 
-            heart1.isVisible = false
+            composer.gotoScene ("level4_screen" {effect = "fade", time = 500})
             heart2.isVisible = false
             heart3.isvisible = false
             heart4.isvisible = false
