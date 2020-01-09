@@ -295,7 +295,7 @@ local function CheckUserAnswerInput()
             pointsText.text = "Points = " .. points 
 
         if ( points == 5 ) then 
-            composer.gotoScene ("you_win" {effect = "fade", time = 500})
+            composer.gotoScene ("you_win", {effect = "fade", time = 500})
             heart2.isVisible = false
             heart3.isvisible = false
             heart4.isvisible = false
