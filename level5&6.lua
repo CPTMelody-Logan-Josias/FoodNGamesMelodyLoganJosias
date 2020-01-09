@@ -149,8 +149,8 @@ function scene:create( event )
             height = 100,
 
             --Insert the images here
-            defaultFile = "Images/CreditsButtonUnPressedJosias@2x.png",
-            overFile = "Images/CreditsButtonPressedJosias@2x.png",
+            defaultFile = "Images/HomeUnpressedMelody@2x.png",
+            overFile = "Images/HomePressedMelody@2x.png",
 
             -- When the button is released, call the Credits transition function
             onRelease = HomeTransition
@@ -165,14 +165,14 @@ function scene:create( event )
     level5Button = widget.newButton( 
         {
             -- Set its position on the screen relative to the screen size
-            x = display.contentWidth*4/5,
-            y = display.contentHeight*4/10,
+            x = display.contentWidth*1/5,
+            y = display.contentHeight/2,
             width = 200,
             height = 100,
 
             -- Insert the images here
-            defaultFile = "Images/level3ButtonUnpressedMelody@2x.png",
-            overFile = "Images/level3ButtonPressedMelody@2x.png",
+            defaultFile = "Images/Level5ButtonUnpressedLogan.png",
+            overFile = "Images/Level5ButtonPressedLogan.png",
 
             -- When the button is released, call the level1 transition function
            onRelease = Level5Transition
@@ -183,13 +183,13 @@ function scene:create( event )
         {
             -- Set its position on the screen relative to the screen size
             x = display.contentWidth*4/5,
-            y = display.contentHeight*6/10,
+            y = display.contentHeight/2,
             width = 200,
             height = 100,
 
             -- Insert the images here
-            defaultFile = "Images/level4ButtonUnpressedMelody@2x.png",
-            overFile = "Images/level4ButtonPressedMelody@2x.png",
+            defaultFile = "Images/Level6ButtonUnpressedLogan.png",
+            overFile = "Images/Level6ButtonPressedLogan.png",
 
             -- When the button is released, call the level1 transition function
            onRelease = Level6Transition
