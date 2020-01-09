@@ -98,7 +98,7 @@ local ballPosition
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 local function BackTransition()
-    composer.gotoScene( "mainmenu", {effect = "flipFadeOutIn", time = 500})
+    composer.gotoScene( "level5&6", {effect = "flipFadeOutIn", time = 500})
 end 
 
 local function DisplayQuestion()
