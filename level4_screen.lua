@@ -90,8 +90,14 @@ local scrollYSpeedIncorrect = -20
 --SOUNDS
 -----------------------------------------------------------------------------------------
 
-local goalSound = audio.loadSound()
-local goalSoundChannel
+local soccerSound = audio.loadSound("Sounds/soccerSound.mp3")
+local soccerSoundChannel
+
+local correctSound = audio.loadSound( "Sounds/correctSound.mp3")
+local correctSoundChannel
+
+local wrongSound = audio.loadSound("Sounds/wrongSound.mp3")
+local wrongSoundChannel
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
@@ -558,7 +564,8 @@ function scene:show( event )
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
         RestartLevel1()
-        AddAnswerBoxEventListeners() 
+        AddAnswerBoxEventListeners()
+        soccerSoundChannel = audio.play ( soccerSound. {loops = -1})
 
     end
 
