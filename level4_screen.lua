@@ -40,7 +40,7 @@ local bkg_image
 local questionText
 local points = 0
 local pointsText
-local lives = 5
+local lives = 4
 local livesText
 
 --the alternate numbers randomly generated
@@ -262,17 +262,14 @@ local function CheckUserAnswerInput()
         points = points + 1
         pointsText.text = "Points: " .. points
         correctText.isVisible = true
+        correctSoundChannel = audio.play ( correctSound )
         timer.performWithDelay(1600, HideCorrectText)
 
         Runtime:addEventListener("enterFrame", MoveSoccerBallCorrect) 
         
     else 
         lives = lives -1
-
-        livesText.text = "Lives: " .. points
-
         livesText.text = "Lives: " .. lives
-
         Lives()
         print("correctAnswer = ".. correctAnswer)
         incorrectText.isVisible = true
@@ -565,7 +562,7 @@ function scene:show( event )
         -- Example: start timers, begin animation, play audio, etc.
         RestartLevel1()
         AddAnswerBoxEventListeners()
-        soccerSoundChannel = audio.play ( soccerSound. {loops = -1})
+        soccerSoundChannel = audio.play ( soccerSound, {loops = -1})
 
     end
 
