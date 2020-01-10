@@ -540,7 +540,7 @@ function scene:create( event )
     sceneGroup:insert( pointsText )
     sceneGroup:insert( correctText )
     sceneGroup:insert( livesText )
-    sceneGroup:insert( backButton )
+
 
 end --function scene:create( event )
 
