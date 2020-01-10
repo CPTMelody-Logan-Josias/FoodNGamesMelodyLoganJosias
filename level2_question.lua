@@ -1052,18 +1052,18 @@ function scene:create( event )
 
     -- create the answer text object & wrong answer text objects
     letter1 = display.newText("", X1, Y1, Arial, 100)
-    letter1:setFillColor(0,0,0)
+    letter1:setTextColor(0,0,0)
     letter2 = display.newText("", X2, Y1, Arial, 100)
-    letter2:setFillColor(0,0,0)
+    letter2:setTextColor(0,0,0)
     letter3 = display.newText("", X3, Y1, Arial, 100)
-    letter3:setFillColor(0,0,0)
+    letter3:setTextColor(0,0,0)
     letter4 = display.newText("", X4, Y1, Arial, 100)
-    letter4:setFillColor(0,0,0)
+    letter4:setTextColor(0,0,0)
     pointsText = display.newText("Points = " .. points, display.contentWidth*4/7, display.contentHeight*6/7, Arial, 50)
-    pointsText:setFillColor(0,0,0)
+    pointsText:setTextColor(0,0,0)
 
     livesText = display.newText("lives = " .. lives, display.contentWidth*2/7, display.contentHeight*6/7, Arial, 50)
-    livesText:setFillColor(0,0,0)
+    livesText:setTextColor(0,0,0)
 
     -- Insert the platforms
     placeholderL1 = display.newImageRect("Images/LetterPlaceHolderMelody@2x.png", 100, 100)
