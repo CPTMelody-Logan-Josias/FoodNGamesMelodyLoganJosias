@@ -41,7 +41,7 @@ local backButton
 local questionText
 local points = 0
 local pointsText
-local lives = 4
+local lives = 2
 local livesText
 
 --the alternate numbers randomly generated
