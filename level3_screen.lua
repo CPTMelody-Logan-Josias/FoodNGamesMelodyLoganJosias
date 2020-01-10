@@ -333,9 +333,7 @@ local function CheckUserAnswerInput()
         
 
             if ( lives == 0 ) then 
-                gameOver = display.newImageRect("Images/Losescreen.png", 1304, 769)
-                gameOver.x = display.contentCenterX
-                gameOver.y = display.contentCenterY
+                composer.gotoScene ("youLose", {effect = "fade", time = 500})
                 wrongSoundChannel = audio.play(wrongSound)
                 timer.performWithDelay(2000, Hideincorrect)                
             end     
