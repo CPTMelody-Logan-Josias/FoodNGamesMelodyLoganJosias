@@ -292,9 +292,7 @@ local function CheckUserAnswerInput()
             pointsText.text = "Points = " .. points 
 
         if ( points == 5 ) then 
-            youWin = display.newImageRect("Images/Winscreen.png", 1304, 769)
-            youWin.x = display.contentCenterX
-            youWin.y = display.contentCenterY 
+            composer.gotoScene ("you_win", {effect = "fade", time = 500})
             heart1.isVisible = false
             heart2.isVisible = false
             heart3.isvisible = false
@@ -515,11 +513,11 @@ function scene:create( event )
     backButton = widget.newButton( 
     {
         -- Setting Position
-        x = display.contentWidth*0.5/5,
-        y = display.contentHeight*0.5/5,
+        x = display.contentWidth/1.12,
+        y = display.contentHeight/1.13,
         -- sets the size of the button
-        width = 150,
-        height = 75,
+        width = 190,
+        height = 100,
 
         -- Setting Dimensions
         -- width = 1000,

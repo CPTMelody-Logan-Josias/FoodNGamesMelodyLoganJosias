@@ -106,7 +106,7 @@ local wrongSoundChannel
 
 local function BackTransition()
     composer.gotoScene("mainmenu", {effect = "fade", time = 500})
-
+end
 local function DisplayQuestion()
     local randomNumber1
     local randomNumber2
@@ -455,19 +455,19 @@ function scene:create( event )
     backButton = widget.newButton( 
     {
         -- Setting Position
-        x = display.contentWidth*0.5/5,
-        y = display.contentHeight*0.5/5,
+        x = display.contentWidth/1.12,
+        y = display.contentHeight/1.13,
         -- sets the size of the button
-        width = 150,
-        height = 75,
+        width = 190,
+        height = 100,
 
         -- Setting Dimensions
         -- width = 1000,
         -- height = 106,
 
         -- Setting Visual Properties
-        defaultFile = "Images/HomeUnpressedMelody.png",
-        overFile = "Images/HomePressedMelody.png",
+        defaultFile = "Images/BackButtonUnpressedJosias@2x.png",
+        overFile = "Images/BackButtonPressedJosias@2x.png",
 
         -- Setting Functional Properties
         onRelease = BackTransition
