@@ -616,7 +616,7 @@ function scene:hide( event )
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
-        audio.stop()
+        audio.pause()
         RemoveAnswerBoxEventListeners()
     end
 
