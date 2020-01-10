@@ -37,11 +37,12 @@ local wrongSound = audio.loadSound("Sounds/wrongSound.mp3")
 local wrongSoundChannel
 
 -- hearts 
-local lives = 4 
+local lives = 3
 local heart1 
 local heart2 
 local heart3 
-local heart4 
+
+ 
 
 -- The background image and soccer ball for this scene
 local bkg_image
@@ -301,12 +302,10 @@ local function CheckUserAnswerInput()
             heart1.isVisible = false
             heart2.isVisible = false
             heart3.isvisible = false
-            heart4.isvisible = false
             incorrectObject.isVisible = false 
             correctObject.isVisible = false 
             questionText.isVisible = false  
             heart3.isVisible = false 
-            heart4.isVisible = false
             correctSoundChannel = audio.play(correctSound)
             timer.performWithDelay(2000, HideCorrect)            
         end 
@@ -320,10 +319,9 @@ local function CheckUserAnswerInput()
         wrongSoundChannel = audio.play(wrongSound)
         timer.performWithDelay(2000, Hideincorrect)
 
-        if (lives == 3) then
-            heart4.isVisible = false
+
              
-        elseif (lives == 2) then
+        if (lives == 2) then
             heart3.isVisible = false
 
         elseif (lives == 1) then
@@ -598,9 +596,6 @@ function scene:create( event )
     heart3.x = display.contentWidth * 7/8
     heart3.y = display.contentHeight * 1/7
 
-    heart4 = display.newImageRect("Images/heart.png", 50, 50)
-    heart4.x = display.contentWidth * 6.6/8
-    heart4.y = display.contentHeight * 1/7
     
     correctObject = display.newText( "Correct", display.contentWidth/2, display.contentHeight*2/3, nil, 50)
     correctObject.isVisible = false
@@ -636,7 +631,6 @@ function scene:create( event )
     sceneGroup:insert( heart1 )
     sceneGroup:insert( heart2 )
     sceneGroup:insert( heart3 )
-    sceneGroup:insert( heart4 )
     sceneGroup:insert( pointsText )
 
 end --function scene:create( event )
