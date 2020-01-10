@@ -547,6 +547,7 @@ function scene:create( event )
     questionText = display.newText( "" , 0, 0, nil, 100)
     questionText.x = display.contentWidth * 0.3
     questionText.y = display.contentHeight * 0.9
+    questionText:setTextColor(1/255, 1/255, 1/255)
 
     -- create the soccer ball and place it on the scene
     soccerball = display.newImageRect("Images/soccerball.png", 60, 60, 0, 0)
@@ -565,8 +566,11 @@ function scene:create( event )
 
     --create answerbox alternate answers and the boxes to show them
     answerbox = display.newText("", display.contentWidth * 0.9, 0, nil, 100)
+    answerbox:setTextColor(1/255, 1/255, 1/255)
     alternateAnswerBox1 = display.newText("", display.contentWidth * 0.9, 0, nil, 100)
+    alternateAnswerBox1:setTextColor(1/255, 1/255, 1/255)
     alternateAnswerBox2 = display.newText("", display.contentWidth * 0.9, 0, nil, 100)
+    alternateAnswerBox2:setTextColor(1/255, 1/255, 1/255)
 
     -- set the x positions of each of the answer boxes
     answerboxPreviousX = display.contentWidth * 0.9
@@ -597,13 +601,17 @@ function scene:create( event )
     
     correctObject = display.newText( "Correct", display.contentWidth/2, display.contentHeight*2/3, nil, 50)
     correctObject.isVisible = false
+    correctObject:setTextColor(1/255, 1/255, 1/255)
 
     -- Create the incorrect text object and make it visible
     incorrectObject = display.newText( "incorrect", display.contentWidth/2, display.contentHeight*2/3, nil, 50)
     incorrectObject.isVisible = false
+    incorrectObject:setTextColor(1/255, 1/255, 1/255)
 
     -- display the amount of points as text object
     pointsText = display.newText("Points = " .. points, display.contentWidth/3, display.contentHeight/3, nil,50)
+    pointsText:setTextColor(1/255, 1/255, 1/255)
+
 
     ballPosition = display.newImageRect("Images/soccerball.png", 60, 60, 0, 0)
     ballPosition.x = display.contentWidth*0.385 
