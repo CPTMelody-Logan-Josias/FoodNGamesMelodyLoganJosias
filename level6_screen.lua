@@ -22,7 +22,7 @@ local widget = require( "widget" )
 ----------------------------------------------------------------------------------------
 
  --Naming Scene
-sceneName = "level5_screen"
+sceneName = "level6_screen"
 
  --Creating Scene Object
 local scene = composer.newScene( sceneName )
