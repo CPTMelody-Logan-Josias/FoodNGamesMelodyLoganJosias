@@ -334,6 +334,8 @@ local function CheckUserAnswerInput()
 
             if ( lives == 0 ) then 
                 composer.gotoScene("youLose", {effect = "fade", time = 500})
+
+
                 wrongSoundChannel = audio.play(wrongSound)
                 timer.performWithDelay(2000, Hideincorrect)                
             end     
