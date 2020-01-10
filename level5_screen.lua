@@ -1,4 +1,5 @@
------------------------------------------------------------------------------------------
+
++-----------------------------------------------------------------------------------------
 --
 -- game_level1.lua
 -- Created by: Daniel
@@ -293,6 +294,11 @@ local function CheckUserAnswerInput()
 
         if ( points == 5 ) then 
             composer.gotoScene ("you_win", {effect = "fade", time = 500})
+
+
+            youWin.x = display.contentCenterX
+            youWin.y = display.contentCenterY 
+
             heart1.isVisible = false
             heart2.isVisible = false
             heart3.isvisible = false
