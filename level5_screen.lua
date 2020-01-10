@@ -296,8 +296,7 @@ local function CheckUserAnswerInput()
             composer.gotoScene ("you_win", {effect = "fade", time = 500})
 
 
-            youWin.x = display.contentCenterX
-            youWin.y = display.contentCenterY 
+
 
             heart1.isVisible = false
             heart2.isVisible = false
@@ -337,9 +336,7 @@ local function CheckUserAnswerInput()
         
 
             if ( lives == 0 ) then 
-                composer.gotoScene("you_lose", {effect = "fade", time = 500})
-                gameOver.x = display.contentCenterX
-                gameOver.y = display.contentCenterY
+                composer.gotoScene("youLose", {effect = "fade", time = 500})
                 wrongSoundChannel = audio.play(wrongSound)
                 timer.performWithDelay(2000, Hideincorrect)                
             end     
