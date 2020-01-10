@@ -292,9 +292,7 @@ local function CheckUserAnswerInput()
             pointsText.text = "Points = " .. points 
 
         if ( points == 5 ) then 
-            youWin = display.newImageRect("Images/Winscreen.png", 1304, 769)
-            youWin.x = display.contentCenterX
-            youWin.y = display.contentCenterY 
+            composer.gotoScene ("you_win", {effect="fade", time=500})
             heart1.isVisible = false
             heart2.isVisible = false
             heart3.isvisible = false
@@ -333,9 +331,7 @@ local function CheckUserAnswerInput()
         
 
             if ( lives == 0 ) then 
-                gameOver = display.newImageRect("Images/Losescreen.png", 1304, 769)
-                gameOver.x = display.contentCenterX
-                gameOver.y = display.contentCenterY
+                composer.gotoScene ("you_lose", {effect = "fade", time = 500})
                 wrongSoundChannel = audio.play(wrongSound)
                 timer.performWithDelay(2000, Hideincorrect)                
             end     
@@ -526,8 +522,8 @@ function scene:create( event )
         -- height = 106,
 
         -- Setting Visual Properties
-        defaultFile = "Images/BackButtonUnpressedJosias@2x.png",
-        overFile = "Images/BackButtonPressedJosias@2x.png",
+        defaultFile = "Images/HomeUnpressedMelody@2x.png",
+        overFile = "Images/HomePressedMelody@2x.png",
 
         -- Setting Functional Properties
         onRelease = BackTransition

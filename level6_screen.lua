@@ -22,7 +22,7 @@ local widget = require( "widget" )
 ----------------------------------------------------------------------------------------
 
  --Naming Scene
-sceneName = "level5_screen"
+sceneName = "level6_screen"
 
  --Creating Scene Object
 local scene = composer.newScene( sceneName )
@@ -40,7 +40,7 @@ local bkg_image
 local questionText
 local points = 0
 local pointsText
-local lives = 4
+local lives = 3
 local livesText
 
 --the alternate numbers randomly generated
@@ -80,7 +80,6 @@ local userAnswerBoxPlaceholder
 local correctSound
 local booSound
 
-
 --scroll speed for the ball to Score
 local scrollXSpeedCorrect = 14.5
 local scrollYSpeedCorrect = -17
@@ -102,9 +101,11 @@ local wrongSoundChannel
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
------------------------------------------------------------------------------------------ 
+-----------------------------------------------------------------------------------------
 
-
+local function BackTransition()
+    composer.gotoScene("level5&6", {effect="flipFadeOutIn", time=500})
+end
 local function DisplayQuestion()
     local randomNumber1
     local randomNumber2
@@ -449,7 +450,27 @@ function scene:create( event )
     local sceneGroup = self.view
 
     ----------------------------------------------------------------------------------
- 
+    -- Creating Back Button
+    backButton = widget.newButton( 
+    {
+        -- Setting Position
+        x = display.contentWidth/1.13,
+        y = display.contentHeight/1.12,
+        -- sets the size of the button
+        width = 190,
+        height = 100,
+
+        -- Setting Dimensions
+        -- width = 1000,
+        -- height = 106,
+
+        -- Setting Visual Properties
+        defaultFile = "Images/HomeUnpressedMelody@2x.png",
+        overFile = "Images/HomePressedMelody@2x.png",
+
+        -- Setting Functional Properties
+        onRelease = BackTransition
+    } )
     ----------------------------------------------------------------------------------
     --Inserting backgroud image and lives
     ----------------------------------------------------------------------------------

@@ -49,6 +49,7 @@ local alternateAnswer1
 local alternateAnswer2
 local correctText
 local incorrectText
+local backButton
 
 -- Variables containing the user answer and the actual answer
 local userAnswer
@@ -103,6 +104,10 @@ local wrongSoundChannel
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
+local function BackTransition()
+    composer.gotoScene ("mainmenu", {effect= "flipFadeOutIn", time = 500})
+end
+
 local function DisplayQuestion()
     local randomNumber1
     local randomNumber2
@@ -124,7 +129,6 @@ local function DisplayQuestion()
     answerboxAlreadyTouched = false
     alternateAnswerBox1AlreadyTouched = false
     alternateAnswerBox2AlreadyTouched = false
-
 end
 
 local function DetermineAlternateAnswers()    
@@ -286,15 +290,6 @@ local function CheckUserAnswerInput()
     end   
 end
 
-
-local function Lives()
-    if (lives == 0) then
-        composer.gotoScene("you_lose", {effect = "fade", time = 500})
-    end
-end
-
-
-
 local function TouchListenerAnswerbox(touch)
     --only work if none of the other boxes have been touched
     if (alternateAnswerBox1AlreadyTouched == false) and 
@@ -447,10 +442,27 @@ function scene:create( event )
     local sceneGroup = self.view
 
     ----------------------------------------------------------------------------------
-    ----------------------------------------------------------------------------------
-    --Inserting backgroud image and lives
-    ----------------------------------------------------------------------------------
+    -- Creating Back Button
+    backButton = widget.newButton( 
+    {
+        -- Setting Position
+        x = display.contentWidth/1.13,
+        y = display.contentHeight/1.12,
+        -- sets the size of the button
+        width = 190,
+        height = 100,
 
+        -- Setting Dimensions
+        -- width = 1000,
+        -- height = 106,
+
+        -- Setting Visual Properties
+        defaultFile = "Images/HomeUnpressedMelody@2x.png",
+        overFile = "Images/HomePressedMelody@2x.png",
+
+        -- Setting Functional Properties
+        onRelease = BackTransition
+    } )
     -- Insert the background image
     bkg_image = display.newImageRect("Images/Level3ScreenLogan.png", 1024, 768)
     bkg_image.x = display.contentCenterX
@@ -537,6 +549,7 @@ function scene:create( event )
     sceneGroup:insert( pointsText )
     sceneGroup:insert( correctText )
     sceneGroup:insert( livesText )
+    sceneGroup:insert( backButton )
 
 end --function scene:create( event )
 
