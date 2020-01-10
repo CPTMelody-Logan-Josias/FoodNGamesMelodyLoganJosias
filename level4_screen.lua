@@ -35,6 +35,7 @@ local scene = composer.newScene( sceneName )
 local soccerBall
 local player
 local bkg_image
+local backButton
 
 --the text that displays the question
 local questionText
@@ -102,6 +103,9 @@ local wrongSoundChannel
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
+
+local function BackTransition()
+    composer.gotoScene("mainmenu", {effect = "fade", time = 500})
 
 local function DisplayQuestion()
     local randomNumber1
@@ -447,6 +451,28 @@ function scene:create( event )
     local sceneGroup = self.view
 
     ----------------------------------------------------------------------------------
+    -- Creating Back Button
+    backButton = widget.newButton( 
+    {
+        -- Setting Position
+        x = display.contentWidth*0.5/5,
+        y = display.contentHeight*0.5/5,
+        -- sets the size of the button
+        width = 150,
+        height = 75,
+
+        -- Setting Dimensions
+        -- width = 1000,
+        -- height = 106,
+
+        -- Setting Visual Properties
+        defaultFile = "Images/HomeUnpressedMelody.png",
+        overFile = "Images/HomePressedMelody.png",
+
+        -- Setting Functional Properties
+        onRelease = BackTransition
+
+    } )
     ----------------------------------------------------------------------------------
     --Inserting backgroud image and lives
     ----------------------------------------------------------------------------------
@@ -537,6 +563,7 @@ function scene:create( event )
     sceneGroup:insert( pointsText )
     sceneGroup:insert( correctText )
     sceneGroup:insert( livesText )
+    sceneGroup:insert( backButton )
 
 end --function scene:create( event )
 
