@@ -90,7 +90,7 @@ local fire
 --SOUND
 ----------------------------------------------------------------------------------------
 -- level 1 backgroundsound
-local level1Sound = audio.loadSound("Sounds/level1Sound.mp3")
+local level1Sound = audio.loadStream("Sounds/level1Sound.mp3")
 local level1SoundChannel4
 
 -----------------------------------------------------------------------------------------
@@ -898,7 +898,7 @@ function scene:show( event )
             UnmuteButton.isVisible = true
             MuteButton.isVisible = false
             level1SoundChannel4 = audio.play( level1Sound, { channel=3, loops = -1} ) 
-            audio.pause( levelSoundChannel2 )
+            audio.pause( level1SoundChannel4 )
         end
 
         MuteButton:addEventListener("touch", MuteListener) 

@@ -444,7 +444,7 @@ local function CheckUserAnswerInput()
         pointsText.text = "Points = " .. points
         rightSoundChannel = audio.play( rightSound )
         correctObject.isVisible = true
-        timer.performWithDelay(700, HideCorrectObject)
+        timer.performWithDelay(2000, HideCorrectObject)
         
        
         if (points == 5)then
@@ -465,7 +465,7 @@ local function CheckUserAnswerInput()
         wrongSoundChannel = audio.play( wrongSound )
         inCorrectObject.isVisible = true
         inCorrectObject.text = ("Sorry, the right answer is "..correctLetter1.text..correctLetter2.text..correctLetter3.text..correctLetter4.text)
-        timer.performWithDelay(700, HideCorrectObject)
+        timer.performWithDelay(1000, HideCorrectObject)
 
         if (lives == 0) then
             BackToLevel2Lose()

@@ -91,7 +91,7 @@ local scrollYSpeedIncorrect = -20
 --SOUNDS
 -----------------------------------------------------------------------------------------
 
-local soccerSound = audio.loadSound("Sounds/soccerSound.mp3")
+local soccerSound = audio.loadStream("Sounds/soccerSound.mp3")
 local soccerSoundChannel
 
 local correctSound = audio.loadSound( "Sounds/correctSound.mp3")
@@ -616,7 +616,7 @@ function scene:hide( event )
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
-        audio.pause()
+        audio.stop(soccerSoundChannel)
         RemoveAnswerBoxEventListeners()
     end
 

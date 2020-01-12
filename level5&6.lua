@@ -45,7 +45,7 @@ local homeButton
 -----------------------------------------------------------------------------------------
 -- LOCAL SOUND
 -----------------------------------------------------------------------------------------
-local mainmenuSound = audio.loadSound("Sounds/mainmenuSound.mp3")
+local mainmenuSound = audio.loadStream("Sounds/mainmenuSound.mp3")
 local mainmenuSoundChannel3
 
 -----------------------------------------------------------------------------------------
