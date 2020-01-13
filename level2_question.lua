@@ -402,6 +402,11 @@ local function DisplayQuestion()
     letter4PreviousX = X4
     letter4PreviousY = Y1
 
+    print ("***correctLetter1.text = " .. correctLetter1.text)
+    print ("***correctLetter2.text = " .. correctLetter2.text)
+    print ("***correctLetter3.text = " .. correctLetter3.text)
+    print ("***correctLetter4.text = " .. correctLetter4.text)
+
 end
 
 local function LetterPosion()
@@ -458,21 +463,23 @@ local function CheckUserAnswerInput()
     
     -- otherwise they did not match up the letters correctly
     else
+        print("***Incorrect")
         -- they got it wrong so lose a life
         lives = lives - 1
-        AskQuestionLevel2()
+        
         livesText.text = "lives = " .. lives 
         wrongSoundChannel = audio.play( wrongSound )
         inCorrectObject.isVisible = true
-        inCorrectObject.text = ("Sorry, the right answer is "..correctLetter1.text..correctLetter2.text..correctLetter3.text..correctLetter4.text)
+        inCorrectObject.text = "Sorry, the right answer is "..correctLetter1.text..correctLetter2.text..correctLetter3.text..correctLetter4.text
         timer.performWithDelay(1000, HideCorrectObject)
 
         if (lives == 0) then
             BackToLevel2Lose()
         else 
             secondsLeft = totalSeconds
-            
+            timer.performWithDelay(1000, AskQuestionLevel2)    
         end
+
     end
 end
 
@@ -507,7 +514,6 @@ end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerLetter1(touch)
-    print ("***TouchListenerLetter1 was called")
     --only work if none of the other boxes have been touched
    if (letter2Touched == false) and (letter3Touched == false) and (letter4Touched == false) then
 
@@ -627,7 +633,6 @@ end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerLetter2(touch)
-    print ("***TouchListenerLetter2 was called")
 --only work if none of the other boxes have been touched
     if (letter1Touched == false) and (letter3Touched == false) and (letter4Touched == false) then
 
@@ -740,7 +745,6 @@ end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerLetter3(touch)
-    print ("***TouchListenerLetter3 was called")
   --only work if none of the other boxes have been touched
     if (letter1Touched == false) and (letter2Touched == false) and (letter4Touched == false) then
 
@@ -866,7 +870,6 @@ end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerLetter4(touch)
-    print ("***TouchListenerLetter4 was called")
   --only work if none of the other boxes have been touched
     if (letter1Touched == false) and (letter2Touched == false) and (letter3Touched == false) then
 

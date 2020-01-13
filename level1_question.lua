@@ -399,14 +399,14 @@ local function CheckUserAnswerInput()
         livesText.text = "lives = " .. lives 
         wrongSoundChannel = audio.play( wrongSound )
         inCorrectObject.isVisible = true
-        inCorrectObject.text = ("Sorry, the right answer is "..correctLetter1.text..correctLetter2.text..correctLetter3.text)
+        inCorrectObject.text = "Sorry, the right answer is "..correctLetter1.text..correctLetter2.text..correctLetter3.text
         timer.performWithDelay(700, HideCorrectObject)
 
         if (lives == 0) then
             BackToLevel1Lose()
         else 
             secondsLeft = totalSeconds
-            AskQuestionLevel1()
+            timer.performWithDelay(1000, AskQuestionLevel2)  
         end
     end
 end
