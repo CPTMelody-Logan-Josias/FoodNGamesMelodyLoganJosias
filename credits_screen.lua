@@ -34,7 +34,7 @@ local scene = composer.newScene( sceneName )
 
 local bkg_image
 local backButton
---local creditsButton
+
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
@@ -71,7 +71,6 @@ function scene:create( event )
 
     -- Associating display objects with this scene 
     sceneGroup:insert( bkg_image )
-    bkg_image:toBack()
 
 
     -----------------------------------------------------------------------------------------
