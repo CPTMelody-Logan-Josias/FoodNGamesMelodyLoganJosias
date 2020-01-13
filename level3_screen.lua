@@ -498,6 +498,13 @@ function scene:create( event )
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
 
+    -- Insert the background image
+    bkg_image = display.newImageRect("Images/Level3ScreenLogan.png", 2048, 1536)
+    bkg_image.anchorX = 0
+    bkg_image.anchorY = 0
+    bkg_image.width = display.contentWidth
+    bkg_image.height = display.contentHeight
+
     ----------------------------------------------------------------------------------
     -- Creating Back Button
     backButton = widget.newButton( 
@@ -522,17 +529,6 @@ function scene:create( event )
         onRelease = BackTransition
 
     } )
-    ----------------------------------------------------------------------------------
-    --Inserting backgroud image and lives
-    ----------------------------------------------------------------------------------
-
-
-    -- Insert the background image
-    bkg_image = display.newImageRect("Images/Level3ScreenLogan.png", 2048, 1536)
-    bkg_image.anchorX = 0
-    bkg_image.anchorY = 0
-    bkg_image.width = display.contentWidth
-    bkg_image.height = display.contentHeight
 
     --the text that displays the question
     questionText = display.newText( "" , 0, 0, nil, 100)
@@ -610,11 +606,11 @@ function scene:create( event )
     ballPosition.isvisible = false
 
     ----------------------------------------------------------------------------------
-
+    sceneGroup:insert( bkg_image ) 
     sceneGroup:insert( ballPosition )
     ----------------------------------------------------------------------------------
 
-    sceneGroup:insert( bkg_image ) 
+    
     sceneGroup:insert( questionText ) 
     sceneGroup:insert( userAnswerBoxPlaceholder )
     sceneGroup:insert( answerBox )
