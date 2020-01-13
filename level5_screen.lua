@@ -121,7 +121,7 @@ local function DisplayQuestion()
        
 
         --calculate answer
-        correctAnswer = randomNumber1 + randomNumber2
+        correctAnswer = randomNumber1 - randomNumber2
 
         --change question text in relation to answer
         questionText.text = randomNumber1 .. " - " .. randomNumber2 .. " = " 
