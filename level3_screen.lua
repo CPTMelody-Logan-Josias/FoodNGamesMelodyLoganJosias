@@ -113,6 +113,7 @@ local function DisplayQuestion()
     randomNumber1 = math.random(2, 15)
     randomNumber2 = math.random(2, 15)
     randomOperator = math.random(1, 2)
+    print ("***randomOperator = " .. randomOperator)
 
     if (randomOperator == 1) then
        soccerball.x = ballPosition.x
@@ -128,10 +129,8 @@ local function DisplayQuestion()
         -- put the correct answer into the answerbox
         answerBox.text = correctAnswer
 
-        -- make it possible to click on the answers again
-        answerBoxAlreadyTouched = false
-        alternateAnswerBox1AlreadyTouched = false
-        alternateAnswerBox2AlreadyTouched = false
+        
+
     elseif (randomOperator == 2) then
        soccerball.x = ballPosition.x
        soccerball.y = ballPosition.y
@@ -149,24 +148,21 @@ local function DisplayQuestion()
         questionText.text = randomNumber1 .. " - " .. randomNumber2 .. " = "
 
         -- put the correct answer intio the answerbox
-        answerBox.text = correctAnswer
-
-        -- make it possible to click on the answers again
-        answerBoxAlreadyTouched = false
-        alternateAnswerBox1AlreadyTouched = false
-        alternateAnswerBox2AlreadyTouched = false        
+        answerBox.text = correctAnswer       
     end 
+    -- make it possible to click on the answers again
+    answerBoxAlreadyTouched = false
+    alternateAnswerBox1AlreadyTouched = false
+    alternateAnswerBox2AlreadyTouched = false
 
 end
 
 local function HideCorrect()
     correctObject.isVisible = false
-    DisplayQuestion()
 end
 
 local function Hideincorrect()
     incorrectObject.isVisible = false
-    DisplayQuestion()
 end    
 
 
@@ -274,6 +270,7 @@ end
 
 -- Function to Restart Level 1
 local function RestartLevel3()
+    print ("***Called RestartLevel3")
     DisplayQuestion()
     DetermineAlternateAnswers()
     PositionAnswers()    
@@ -283,71 +280,53 @@ end
 local function CheckUserAnswerInput()
 
     if (userAnswer == correctAnswer)then
+        print ("***Answer is correct")
         correctObject.isVisible = true
 
         correctSoundChannel = audio.play(correctSound)
+        Runtime:addEventListener("enterFrame", MovesoccerballCorrect) 
         timer.performWithDelay(2000, HideCorrect)
         
-
         points = points + 1
 
-            -- update it in the display object
-            pointsText.text = "Points = " .. points 
+        -- update it in the display object
+        pointsText.text = "Points = " .. points 
+        print ("***points = " .. points)
 
-        if ( points == 5 ) then 
-            composer.gotoScene ("you_win", {effect = "fade", time = 500})
-            heart2.isVisible = false
-            heart3.isvisible = false
-            heart4.isvisible = false
-            incorrectObject.isVisible = false 
-            correctObject.isVisible = false 
-            questionText.isVisible = false  
-            heart3.isVisible = false 
-            heart4.isVisible = false
-            correctSoundChannel = audio.play(correctSound)
-            timer.performWithDelay(2000, HideCorrect)            
+        if ( points == 5 ) then              
+            
+            composer.gotoScene ("you_win", {effect = "fade", time = 500}) 
+        else 
+            timer.performWithDelay(1600, RestartLevel3)        
         end 
-        Runtime:addEventListener("enterFrame", MovesoccerballCorrect)     
-    else
-
-        
+             
+    else     
+        print ("***Answer is wrong")  
         lives = lives - 1
         secondsLeft = totalSeconds
         incorrectObject.isVisible = true 
         wrongSoundChannel = audio.play(wrongSound)
+        Runtime:addEventListener("enterFrame", MovesoccerballIncorrect) 
         timer.performWithDelay(2000, Hideincorrect)
+
 
         if (lives == 3) then
             heart4.isVisible = false
-             
+            timer.performWithDelay(1600, RestartLevel3)   
         elseif (lives == 2) then
             heart3.isVisible = false
-
+            timer.performWithDelay(1600, RestartLevel3)  
         elseif (lives == 1) then
             heart2.isVisible = false
-
+            timer.performWithDelay(1600, RestartLevel3)  
         elseif (lives == 0) then 
             heart1.isVisible = false 
+            composer.gotoScene("youLose", {effect = "fade", time = 500})
         end
-
-        
-
-            if ( lives == 0 ) then 
-                composer.gotoScene("youLose", {effect = "fade", time = 500})
-
-
-                wrongSoundChannel = audio.play(wrongSound)
-                timer.performWithDelay(2000, Hideincorrect)                
-            end     
-
-        Runtime:addEventListener("enterFrame", MovesoccerballIncorrect)          
-
-            -- clear text        
+  
 
     end    
-          
-    timer.performWithDelay(1600, RestartLevel3) 
-    
+
 end
 
 local function TouchListenerAnswerBox(touch)
@@ -649,7 +628,9 @@ function scene:create( event )
     sceneGroup:insert( heart3 )
     sceneGroup:insert( heart4 )
     sceneGroup:insert( pointsText )
-
+    sceneGroup:insert(incorrectObject)
+    sceneGroup:insert(correctObject)
+    sceneGroup:insert(ballPosition)
 end --function scene:create( event )
 
 -----------------------------------------------------------------------------------------
@@ -672,6 +653,12 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
+        points = 0 
+        lives = 4 
+        heart1.isVisible = true 
+        heart2.isVisible = true
+        heart3.isVisible = true 
+        heart4.isVisible = true 
         RestartLevel3()
         AddAnswerBoxEventListeners() 
         soccerSoundChannel = audio.play(soccerSound)

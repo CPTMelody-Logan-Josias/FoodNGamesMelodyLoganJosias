@@ -632,6 +632,8 @@ function scene:create( event )
     sceneGroup:insert( heart2 )
     sceneGroup:insert( heart3 )
     sceneGroup:insert( pointsText )
+    sceneGroup:insert(incorrectObject)
+    sceneGroup:insert(correctObject)
 
 end --function scene:create( event )
 
