@@ -522,7 +522,7 @@ function scene:create( event )
 
         
         -- Setting Visual Properties
-        defaultFile = "Images/BackbuttonUnpressedJosias@2x.png",
+        defaultFile = "Images/BackButtonUnpressedJosias@2x.png",
         overFile = "Images/BackButtonPressedJosias@2x.png",
 
         -- Setting Functional Properties
