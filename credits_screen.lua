@@ -71,6 +71,7 @@ function scene:create( event )
 
     -- Associating display objects with this scene 
     sceneGroup:insert( bkg_image )
+    bkg_image:toBack()
 
 
     -----------------------------------------------------------------------------------------
