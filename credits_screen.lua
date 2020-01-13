@@ -99,9 +99,6 @@ function scene:create( event )
 
     -- Associating button widgets with this scene
     sceneGroup:insert( backButton )
-    --sceneGroup:insert( instructionButton )
-   
-    -- INSERT INSTRUCTIONS BUTTON INTO SCENE GROUP
 
 end -- function scene:create( event )   
 
