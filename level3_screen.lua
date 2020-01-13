@@ -445,7 +445,7 @@ end
 
 local function TouchListenerAnswerBox2(touch)
     --only work if none of the other boxes have been touched
-    if (answerboxAlreadyTouched == false) and 
+    if (answerBoxAlreadyTouched == false) and 
         (alternateAnswerBox1AlreadyTouched == false) then
 
         if (touch.phase == "began") then
@@ -490,14 +490,14 @@ end
 
 -- Function that Adds Listeners to each answer box
 local function AddAnswerBoxEventListeners()
-    answerbox:addEventListener("touch", TouchListenerAnswerBox)
+    answerBox:addEventListener("touch", TouchListenerAnswerBox)
     alternateAnswerBox1:addEventListener("touch", TouchListenerAnswerBox1)
     alternateAnswerBox2:addEventListener("touch", TouchListenerAnswerBox2)
 end 
 
 -- Function that Removes Listeners to each answer box
 local function RemoveAnswerBoxEventListeners()
-    answerbox:removeEventListener("touch", TouchListenerAnswerBox)
+    answerBox:removeEventListener("touch", TouchListenerAnswerBox)
     alternateAnswerBox1:removeEventListener("touch", TouchListenerAnswerBox1)
     alternateAnswerBox2:removeEventListener("touch", TouchListenerAnswerBox2)
 end
