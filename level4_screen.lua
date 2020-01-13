@@ -66,7 +66,7 @@ local alternateAnswerBox2
 
 -- create variables that will hold the previous x- nd y-positions so that 
 -- each answer will return back to its previous postion after it is moved
-local answerboxPreviousY
+local answerBoxPreviousY
 local alternateAnswerBox1PreviousY
 local alternateAnswerBox2PreviousY
 
