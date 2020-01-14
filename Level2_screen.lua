@@ -735,7 +735,7 @@ local function TouchBowlFilled(touch)
                 -- setting the position of the number to be in the center of the box
                 bowlFilled.x = fire.x
                 bowlFilled.y = fire.y
-                composer.showOverlay( "level2_question", { isModal = true, effect = "fade", time = 100})
+                composer.gotoScene( "level2_question", {effect = "flip", time = 500})
                 bowlFilled.isVisible = false
                 
                 -- call the function to check if the user's input is correct or not

@@ -91,6 +91,7 @@ local Y1 = display.contentHeight*1/3
 local Y2 = display.contentHeight*2/3
 
 local textTouched = false
+local pauseLevel1 = false
 
 --------------------------------------------------------------------------------------
 -- SOUNDS
@@ -406,7 +407,7 @@ local function CheckUserAnswerInput()
             BackToLevel1Lose()
         else 
             secondsLeft = totalSeconds
-            timer.performWithDelay(1000, AskQuestionLevel2)  
+            timer.performWithDelay(1000, AskQuestionLevel1)  
         end
     end
 end
@@ -438,6 +439,31 @@ end
 local function StartTimer()
     --create a countdown timer that loops infinitely
     countDownTimer = timer.performWithDelay(1000, UpdateTime, 0)
+end
+
+-- The transition for the pause button
+function PauseTransition( )
+
+    pauseLevel1 = true
+    timer.pause(countDownTimer)
+
+    -- Pause scene variables
+    local options = {
+            isModal = true,
+            effect = "fromBottom",
+            time = 400
+    }
+composer.showOverlay( "bakingPause", options )
+
+end
+
+function ResumeGame()
+    pauseLevel1 = false
+    timer.resume(countDownTimer)
+end
+
+function ResumeGameInstructions()
+    PauseTransition()
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
@@ -829,11 +855,35 @@ function scene:create( event )
     clockText.x= 500
     clockText.y= 65
 
+
+    -------------------------------------------------------------------------------------------------------
+    --widget
+    -----------------------------------------------------------------------------------------------------------
+
+     -- Create pause button
+    pauseButton = widget.newButton( 
+    {
+        -- Setting Position
+        x = display.contentWidth768,
+        y = display.contentHeight*15/16,
+
+
+        -- Setting Visual Properties
+        defaultFile = "Images/Unpressed Pause.png",
+        overFile = "Images/Pressed Pause.png",
+
+        -- Setting Functional Properties
+        onRelease = PauseTransition
+
+    } )
+
+
     -----------------------------------------------------------------------------------------
 
     -- insert all objects for this scene into the scene group
     sceneGroup:insert(bkg)
     sceneGroup:insert(cover)
+    sceneGroup:insert( pauseButton )
     sceneGroup:insert(questionText)
     sceneGroup:insert(placeholderL1)
     sceneGroup:insert(placeholderL2)
@@ -874,6 +924,7 @@ function scene:show( event )
         points = 0
         StartTimer()
         AskQuestionLevel1()
+        pauseLevel1 = false
 
     end
 
