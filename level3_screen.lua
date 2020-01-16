@@ -591,7 +591,7 @@ function scene:create( event )
     correctObject:setTextColor(1/255, 1/255, 1/255)
 
     -- Create the incorrect text object and make it visible
-    incorrectObject = display.newText( "incorrect", display.contentWidth/2, display.contentHeight*2/3, nil, 50)
+    incorrectObject = display.newText( "Incorrect", display.contentWidth/2, display.contentHeight*2/3, nil, 50)
     incorrectObject.isVisible = false
     incorrectObject:setTextColor(1/255, 1/255, 1/255)
 
