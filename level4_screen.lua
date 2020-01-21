@@ -56,7 +56,7 @@ local backButton
 local userAnswer
 
 -- boolean variables telling me which answer box wa touched
-local answerboxAlreadyTouched = false
+local answerBoxAlreadyTouched = false
 local alternateAnswerBox1AlreadyTouched = false
 local alternateAnswerBox2AlreadyTouched = false
 
@@ -67,11 +67,11 @@ local alternateAnswerBox2
 
 -- create variables that will hold the previous x- nd y-positions so that 
 -- each answer will return back to its previous postion after it is moved
-local answerboxPreviousY
+local answerBoxPreviousY
 local alternateAnswerBox1PreviousY
 local alternateAnswerBox2PreviousY
 
-local answerboxPreviousX
+local answerBoxPreviousX
 local alternateAnswerBox1PreviousX
 local alternateAnswerBox2PreviousX
 
@@ -92,7 +92,7 @@ local scrollYSpeedIncorrect = -20
 --SOUNDS
 -----------------------------------------------------------------------------------------
 
-local soccerSound = audio.loadSound("Sounds/soccerSound.mp3")
+local soccerSound = audio.loadStream("Sounds/soccerSound.mp3")
 local soccerSoundChannel
 
 local correctSound = audio.loadSound( "Sounds/correctSound.mp3")
@@ -127,7 +127,7 @@ local function DisplayQuestion()
     answerBox.text = correctAnswer
 
     -- make it possible to click on the answers again
-    answerboxAlreadyTouched = false
+    answerBoxAlreadyTouched = false
     alternateAnswerBox1AlreadyTouched = false
     alternateAnswerBox2AlreadyTouched = false
 end
@@ -178,7 +178,7 @@ local function PositionAnswers()
         --remembering their positions to return the answer in case it's wrong
         alternateAnswerBox1PreviousY = alternateAnswerBox1.y
         alternateAnswerBox2PreviousY = alternateAnswerBox2.y
-        answerboxPreviousY = answerBox.y 
+        answerBoxPreviousY = answerBox.y 
 
     -- random position 2
     elseif (randomPosition == 2) then
@@ -194,7 +194,7 @@ local function PositionAnswers()
         --remembering their positions to return the answer in case it's wrong
         alternateAnswerBox1PreviousY = alternateAnswerBox1.y
         alternateAnswerBox2PreviousY = alternateAnswerBox2.y
-        answerboxPreviousY = answerBox.y 
+        answerBoxPreviousY = answerBox.y 
 
     -- random position 3
     elseif (randomPosition == 3) then
@@ -209,7 +209,7 @@ local function PositionAnswers()
         --remembering their positions to return the answer in case it's wrong
         alternateAnswerBox1PreviousY = alternateAnswerBox1.y
         alternateAnswerBox2PreviousY = alternateAnswerBox2.y
-        answerboxPreviousY = answerBox.y 
+        answerBoxPreviousY = answerBox.y 
     end
 end
 
@@ -296,7 +296,8 @@ local function Lives()
         composer.gotoScene("youLose", {effect = "fade", time = 500})
     end
 end
-local function TouchListenerAnswerbox(touch)
+
+local function TouchListenerAnswerBox(touch)
     --only work if none of the other boxes have been touched
     if (alternateAnswerBox1AlreadyTouched == false) and 
         (alternateAnswerBox2AlreadyTouched == false) then
@@ -304,7 +305,7 @@ local function TouchListenerAnswerbox(touch)
         if (touch.phase == "began") then
 
             --let other boxes know it has been clicked
-            answerboxAlreadyTouched = true
+            answerBoxAlreadyTouched = true
         --drag the answer to follow the mouse
         elseif (touch.phase == "moved") then
             
@@ -314,7 +315,7 @@ local function TouchListenerAnswerbox(touch)
         -- this occurs when they release the mouse
         elseif (touch.phase == "ended") then
 
-            answerboxAlreadyTouched = false
+            answerBoxAlreadyTouched = false
 
               -- if the number is dragged into the userAnswerBox, place it in the center of it
             if (((userAnswerBoxPlaceholder.x - userAnswerBoxPlaceholder.width/2) < answerBox.x ) and
@@ -332,8 +333,8 @@ local function TouchListenerAnswerbox(touch)
 
             --else make box go back to where it was
             else
-                answerBox.x = answerboxPreviousX
-                answerBox.y = answerboxPreviousY
+                answerBox.x = answerBoxPreviousX
+                answerBox.y = answerBoxPreviousY
             end
         end
     end                
@@ -341,7 +342,7 @@ end
 
 local function TouchListenerAnswerBox1(touch)
     --only work if none of the other boxes have been touched
-    if (answerboxAlreadyTouched == false) and 
+    if (answerBoxAlreadyTouched == false) and 
         (alternateAnswerBox2AlreadyTouched == false) then
 
         if (touch.phase == "began") then
@@ -381,7 +382,7 @@ end
 
 local function TouchListenerAnswerBox2(touch)
     --only work if none of the other boxes have been touched
-    if (answerboxAlreadyTouched == false) and 
+    if (answerBoxAlreadyTouched == false) and 
         (alternateAnswerBox1AlreadyTouched == false) then
 
         if (touch.phase == "began") then
@@ -420,14 +421,14 @@ end
 
 -- Function that Adds Listeners to each answer box
 local function AddAnswerBoxEventListeners()
-    answerBox:addEventListener("touch", TouchListenerAnswerbox)
+    answerBox:addEventListener("touch", TouchListenerAnswerBox)
     alternateAnswerBox1:addEventListener("touch", TouchListenerAnswerBox1)
     alternateAnswerBox2:addEventListener("touch", TouchListenerAnswerBox2)
 end 
 
 -- Function that Removes Listeners to each answer box
 local function RemoveAnswerBoxEventListeners()
-    answerBox:removeEventListener("touch", TouchListenerAnswerbox)
+    answerBox:removeEventListener("touch", TouchListenerAnswerBox)
     alternateAnswerBox1:removeEventListener("touch", TouchListenerAnswerBox1)
     alternateAnswerBox2:removeEventListener("touch", TouchListenerAnswerBox2)
 end 
@@ -510,7 +511,7 @@ function scene:create( event )
     player.y = display.contentHeight/1.9
 
     -- boolean variables stating whether or not the answer was touched
-    answerboxAlreadyTouched = false
+    answerBoxAlreadyTouched = false
     alternateAnswerBox1AlreadyTouched = false
     alternateAnswerBox2AlreadyTouched = false
 
@@ -523,7 +524,7 @@ function scene:create( event )
     alternateAnswerBox2:setTextColor(1/255, 1/255, 1/255)
 
     -- set the x positions of each of the answer boxes
-    answerboxPreviousX = display.contentWidth * 0.9
+    answerBoxPreviousX = display.contentWidth * 0.9
     alternateAnswerBox1PreviousX = display.contentWidth * 0.9
     alternateAnswerBox2PreviousX = display.contentWidth * 0.9
 
@@ -625,7 +626,7 @@ function scene:hide( event )
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
-        audio.pause()
+        audio.stop(soccerSoundChannel)
         RemoveAnswerBoxEventListeners()
     end
 

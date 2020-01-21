@@ -51,7 +51,7 @@ local extraButton
 -----------------------------------------------------------------------------------------
 -- LOCAL SOUND
 -----------------------------------------------------------------------------------------
-local mainmenuSound = audio.loadSound("Sounds/mainmenuSound.mp3")
+local mainmenuSound = audio.loadStream("Sounds/mainmenuSound.mp3")
 local mainmenuSoundChannel3
 
 -----------------------------------------------------------------------------------------
@@ -394,7 +394,7 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
-        audio.stop( mainmenuSoundChannel3 ) 
+        audio.stop( ) 
 
     -----------------------------------------------------------------------------------------
 

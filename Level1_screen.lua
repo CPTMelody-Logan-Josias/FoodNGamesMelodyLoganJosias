@@ -90,7 +90,7 @@ local fire
 --SOUND
 ----------------------------------------------------------------------------------------
 -- level 1 backgroundsound
-local level1Sound = audio.loadSound("Sounds/level1Sound.mp3")
+local level1Sound = audio.loadStream("Sounds/level1Sound.mp3")
 local level1SoundChannel4
 
 -----------------------------------------------------------------------------------------
@@ -616,7 +616,7 @@ local function TouchBowlFilled(touch)
                 -- setting the position of the number to be in the center of the box
                 bowlFilled.x = fire.x
                 bowlFilled.y = fire.y
-                composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
+                composer.gotoScene( "level1_question", {effect = "flip", time = 500})
                 bowlFilled.isVisible = false
                 
                 -- call the function to check if the user's input is correct or not
@@ -898,7 +898,7 @@ function scene:show( event )
             UnmuteButton.isVisible = true
             MuteButton.isVisible = false
             level1SoundChannel4 = audio.play( level1Sound, { channel=3, loops = -1} ) 
-            audio.pause( levelSoundChannel2 )
+            audio.pause( level1SoundChannel4 )
         end
 
         MuteButton:addEventListener("touch", MuteListener) 

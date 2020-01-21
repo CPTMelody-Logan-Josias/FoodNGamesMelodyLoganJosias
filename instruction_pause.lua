@@ -1,68 +1,48 @@
 -----------------------------------------------------------------------------------------
+-- Gil Robern
+-- instructions.lua
+-- Scene Template (Composer API)
 --
--- main_menu.lua
--- Created by: Melody Berhane
--- Date: Nov 14, 2019
--- Description: This is the main menu, displaying the credits, instructions & play buttons.
 -----------------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
 
--- Use Composer Library
+-- Calling Composer Library
 local composer = require( "composer" )
 
------------------------------------------------------------------------------------------
-
--- Use Widget Library
 local widget = require( "widget" )
 
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "credits_screen"
+sceneName = "instruction_pause"
 
 -----------------------------------------------------------------------------------------
 
 -- Creating Scene Object
 local scene = composer.newScene( sceneName )
 
------------------------------------------------------------------------------------------
--- LOCAL VARIABLES
------------------------------------------------------------------------------------------
-
-local bkg_image
+local bkg 
 local backButton
 
-
 -----------------------------------------------------------------------------------------
--- LOCAL FUNCTIONS
------------------------------------------------------------------------------------------ 
-
--- INSERT LOCAL FUNCTION DEFINITION THAT GOES TO INSTRUCTIONS SCREEN 
-local function BackTransition( )
-    composer.gotoScene( "mainmenu", {effect = "slideDown", time = 500})
-end 
-
+-- FORWARD REFERENCES
 -----------------------------------------------------------------------------------------
--- GLOBAL SCENE FUNCTIONS
+
+-- local forward references should go here
+
 -----------------------------------------------------------------------------------------
 
 -- The function called when the screen doesn't exist
 function scene:create( event )
 
-    display.setDefault("background", 95/255, 15/255, 135/255)
-
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
 
-    -----------------------------------------------------------------------------------------
-    -- BACKGROUND IMAGE & STATIC OBJECTS
-    -----------------------------------------------------------------------------------------
-
     -- Insert the background image and set it to the center of the screen
-    bkg_image = display.newImage("Images/CreditsScreenJosias.png")
+    bkg_image = display.newImage("Images/BakingInstructionsScreenLoganS@2x.png")
     bkg_image.x = display.contentCenterX
     bkg_image.y = display.contentCenterY
     bkg_image.width = display.contentWidth
@@ -72,37 +52,51 @@ function scene:create( event )
     -- Associating display objects with this scene 
     sceneGroup:insert( bkg_image )
 
+    -- Send the background image to the back layer so all other objects can be on top
+    bkg_image:toBack()
+    -----------------------------------------------------------------------------------------
+    -- FUNCTIONS
+    -----------------------------------------------------------------------------------------
+
+    -- Creating Transitioning Function back to main menu
+    function BackTransitionInstructionsPause( )
+        composer.hideOverlay( "fade", 500 )
+    end
 
     -----------------------------------------------------------------------------------------
     -- BUTTON WIDGETS
-    -----------------------------------------------------------------------------------------   
-    
-    -- ADD INSTRUCTIONS BUTTON WIDGET
-     -- Creating Play Button
+    -----------------------------------------------------------------------------------------
+
+    -- Creating Back Button
     backButton = widget.newButton( 
-        {
-            -- Set its position on the screen relative to the screen size
-            x = display.contentWidth*3/5,
-            y = display.contentHeight*4/5,
-            width = 200,
-            height = 100,
+    {
+        -- Setting Position
+        x = display.contentWidth/8,
+        y = display.contentHeight*3/5,
+        width = 200,
+        height = 100,
 
-            -- Insert the images here
-            defaultFile = "Images/BackButtonUnpressedJosias@2x.png",
-            overFile = "Images/BackButtonPressedJosias@2x.png",
+        -- Setting Dimensions
+        -- width = 1000,
+        -- height = 106,
 
-            -- When the button is released, call the Credits transition function
-           onRelease = BackTransition
-        } ) 
+        -- Setting Visual Properties
+        defaultFile = "Images/BackbuttonUnpressedJosias@2x.png",
+        overFile = "Images/BackButtonPressedJosias@2x.png",
+
+        -- Setting Functional Properties
+        onRelease = BackTransitionInstructionsPause
+
+    } )
 
     -----------------------------------------------------------------------------------------
 
-    -- Associating button widgets with this scene
+    -- Associating Buttons with this scene
     sceneGroup:insert( backButton )
 
-end -- function scene:create( event )   
-
-
+    -- Initialize the scene here.
+    -- Example: add display objects to "sceneGroup", add touch listeners, etc.
+end
 
 -----------------------------------------------------------------------------------------
 
@@ -118,25 +112,25 @@ function scene:show( event )
 
     -----------------------------------------------------------------------------------------
 
-    -- Called when the scene is still off screen (but is about to come on screen).   
     if ( phase == "will" ) then
-       
+        -- Called when the scene is still off screen (but is about to come on screen).
     -----------------------------------------------------------------------------------------
 
-    -- Called when the scene is now on screen.
-    -- Insert code here to make the scene come alive.
-    -- Example: start timers, begin animation, play audio, etc.
-    elseif ( phase == "did" ) then       
-        
+    elseif ( phase == "did" ) then
 
+        -- Called when the scene is now on screen.
+        -- Insert code here to make the scene come alive.
+        -- Example: start timers, begin animation, play audio, etc.
     end
 
-end -- function scene:show( event )
+end
 
 -----------------------------------------------------------------------------------------
 
 -- The function called when the scene is issued to leave the screen
 function scene:hide( event )
+
+    local parent = event.parent
 
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
@@ -148,6 +142,9 @@ function scene:hide( event )
     -----------------------------------------------------------------------------------------
 
     if ( phase == "will" ) then
+
+        
+
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
@@ -155,10 +152,12 @@ function scene:hide( event )
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
+        
         -- Called immediately after scene goes off screen.
+        ResumeGameInstructions() 
     end
 
-end -- function scene:hide( event )
+end
 
 -----------------------------------------------------------------------------------------
 
@@ -168,11 +167,13 @@ function scene:destroy( event )
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
 
+    -----------------------------------------------------------------------------------------
+
+
     -- Called prior to the removal of scene's view ("sceneGroup").
     -- Insert code here to clean up the scene.
     -- Example: remove display objects, save state, etc.
-
-end -- function scene:destroy( event )
+end
 
 -----------------------------------------------------------------------------------------
 -- EVENT LISTENERS
@@ -187,3 +188,4 @@ scene:addEventListener( "destroy", scene )
 -----------------------------------------------------------------------------------------
 
 return scene
+

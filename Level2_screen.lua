@@ -101,7 +101,7 @@ local fire
 --SOUND
 ----------------------------------------------------------------------------------------
 -- level 1 backgroundsound
-local level2Sound = audio.loadSound("Sounds/level1Sound.mp3")
+local level2Sound = audio.loadStream("Sounds/level2Sound.mp3")
 local level2SoundChannel4
 
 -----------------------------------------------------------------------------------------
@@ -735,7 +735,7 @@ local function TouchBowlFilled(touch)
                 -- setting the position of the number to be in the center of the box
                 bowlFilled.x = fire.x
                 bowlFilled.y = fire.y
-                composer.showOverlay( "level2_question", { isModal = true, effect = "fade", time = 100})
+                composer.gotoScene( "level2_question", {effect = "flip", time = 500})
                 bowlFilled.isVisible = false
                 
                 -- call the function to check if the user's input is correct or not
@@ -1087,12 +1087,12 @@ function scene:show( event )
         if (soundOn == true) then
             MuteButton.isVisible = true
             UnmuteButton.isVisible = false
-            level1SoundChannel4 = audio.play( level1Sound, { channel=3, loops = -1} ) 
+            level2SoundChannel4 = audio.play( level2Sound, { channel=4, loops = -1} ) 
         else
             UnmuteButton.isVisible = true
             MuteButton.isVisible = false
-            level1SoundChannel4 = audio.play( level1Sound, { channel=3, loops = -1} ) 
-            audio.pause( levelSoundChannel2 )
+            level2SoundChannel4 = audio.play( level2Sound, { channel=4, loops = -1} ) 
+            audio.pause( level2SoundChannel4 )
         end
 
         MuteButton:addEventListener("touch", MuteListener) 
@@ -1136,7 +1136,7 @@ function scene:hide( event )
         RemoveAnswerBoxEventListeners()
         MuteButton:removeEventListener("touch", MuteListener)
         UnmuteButton:removeEventListener("touch", UnmuteListener)
-        audio.pause( level1SoundChannel4 )
+        audio.stop( level2SoundChannel4 )
     end
 
 end -- function scene:hide( event )
