@@ -35,6 +35,7 @@ local scene = composer.newScene( sceneName )
 local soccerBall
 local player
 local bkg_image
+local backButton
 
 --the text that displays the question
 local questionText
@@ -105,7 +106,7 @@ local wrongSoundChannel
 -----------------------------------------------------------------------------------------
 
 local function BackTransition()
-    composer.gotoScene ("mainmenu", {effect= "flipFadeOutIn", time = 500})
+    composer.gotoScene("mainmenu", {effect = "fade", time = 500})
 end
 
 local function DisplayQuestion()
@@ -290,6 +291,11 @@ local function CheckUserAnswerInput()
     end   
 end
 
+local function Lives()
+    if (lives == 0) then
+        composer.gotoScene("youLose", {effect = "fade", time = 500})
+    end
+end
 local function TouchListenerAnswerbox(touch)
     --only work if none of the other boxes have been touched
     if (alternateAnswerBox1AlreadyTouched == false) and 
@@ -446,8 +452,13 @@ function scene:create( event )
     backButton = widget.newButton( 
     {
         -- Setting Position
+
         x = display.contentWidth/1.13,
         y = display.contentHeight/1.12,
+
+        x = display.contentWidth/1.12,
+        y = display.contentHeight/1.13,
+
         -- sets the size of the button
         width = 190,
         height = 100,
@@ -463,6 +474,18 @@ function scene:create( event )
         -- Setting Functional Properties
         onRelease = BackTransition
     } )
+
+        defaultFile = "Images/BackButtonUnpressedJosias@2x.png",
+        overFile = "Images/BackButtonPressedJosias@2x.png",
+
+        -- Setting Functional Properties
+        onRelease = BackTransition
+
+    } )
+    ----------------------------------------------------------------------------------
+    --Inserting backgroud image and lives
+    ----------------------------------------------------------------------------------
+    
     -- Insert the background image
     bkg_image = display.newImageRect("Images/Level3ScreenLogan.png", 1024, 768)
     bkg_image.x = display.contentCenterX
@@ -602,7 +625,7 @@ function scene:hide( event )
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
-        audio.stop()
+        audio.pause()
         RemoveAnswerBoxEventListeners()
     end
 

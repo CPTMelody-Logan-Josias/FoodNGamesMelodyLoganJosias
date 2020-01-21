@@ -35,12 +35,13 @@ local scene = composer.newScene( sceneName )
 local soccerBall
 local player
 local bkg_image
+local backButton
 
 --the text that displays the question
 local questionText
 local points = 0
 local pointsText
-local lives = 3
+local lives = 2
 local livesText
 
 --the alternate numbers randomly generated
@@ -102,6 +103,11 @@ local wrongSoundChannel
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------- 
+
+local function BackTransition()
+    composer.gotoScene("mainmenu", {effect = "fade", time = 500})
+end
 
 local function BackTransition()
     composer.gotoScene("level5&6", {effect="flipFadeOutIn", time=500})
@@ -456,6 +462,8 @@ function scene:create( event )
         -- Setting Position
         x = display.contentWidth/1.13,
         y = display.contentHeight/1.12,
+        x = display.contentWidth/1.12,
+        y = display.contentHeight/1.13,
         -- sets the size of the button
         width = 190,
         height = 100,
@@ -467,6 +475,11 @@ function scene:create( event )
         -- Setting Visual Properties
         defaultFile = "Images/HomeUnpressedMelody@2x.png",
         overFile = "Images/HomePressedMelody@2x.png",
+
+        -- Setting Functional Properties
+        onRelease = BackTransition
+        defaultFile = "Images/BackButtonUnpressedJosias@2x.png",
+        overFile = "Images/BackButtonPressedJosias@2x.png",
 
         -- Setting Functional Properties
         onRelease = BackTransition
@@ -562,6 +575,7 @@ function scene:create( event )
     sceneGroup:insert( correctText )
     sceneGroup:insert( livesText )
     sceneGroup:insert( backButton )
+
 
 end --function scene:create( event )
 

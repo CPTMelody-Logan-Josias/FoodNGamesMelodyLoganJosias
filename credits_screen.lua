@@ -91,7 +91,7 @@ function scene:create( event )
             height = 100,
 
             -- Insert the images here
-            defaultFile = "Images/BackbuttonUnpressedJosias@2x.png",
+            defaultFile = "Images/BackButtonUnpressedJosias@2x.png",
             overFile = "Images/BackButtonPressedJosias@2x.png",
 
             -- When the button is released, call the Credits transition function

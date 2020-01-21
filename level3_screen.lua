@@ -333,9 +333,9 @@ local function CheckUserAnswerInput()
         
 
             if ( lives == 0 ) then 
-                gameOver = display.newImageRect("Images/Losescreen.png", 1304, 769)
-                gameOver.x = display.contentCenterX
-                gameOver.y = display.contentCenterY
+                composer.gotoScene("youLose", {effect = "fade", time = 500})
+
+
                 wrongSoundChannel = audio.play(wrongSound)
                 timer.performWithDelay(2000, Hideincorrect)                
             end     
@@ -524,19 +524,20 @@ function scene:create( event )
     backButton = widget.newButton( 
     {
         -- Setting Position
-        x = display.contentWidth*0.5/5,
-        y = display.contentHeight*0.5/5,
+        x = display.contentWidth/1.12,
+        y = display.contentHeight/1.13,
         -- sets the size of the button
-        width = 150,
-        height = 75,
+        width = 190,
+        height = 100,
 
         -- Setting Dimensions
         -- width = 1000,
         -- height = 106,
 
+        
         -- Setting Visual Properties
-        defaultFile = "Images/HomeUnpressedMelody@2x.png",
-        overFile = "Images/HomepressedMelody@2x.png",
+        defaultFile = "Images/BackButtonUnpressedJosias@2x.png",
+        overFile = "Images/BackButtonPressedJosias@2x.png",
 
         -- Setting Functional Properties
         onRelease = BackTransition
@@ -558,6 +559,7 @@ function scene:create( event )
     questionText = display.newText( "" , 0, 0, nil, 100)
     questionText.x = display.contentWidth * 0.3
     questionText.y = display.contentHeight * 0.9
+    questionText:setTextColor(1/255, 1/255, 1/255)
 
     -- create the soccer ball and place it on the scene
     soccerball = display.newImageRect("Images/soccerball.png", 60, 60, 0, 0)
@@ -576,8 +578,11 @@ function scene:create( event )
 
     --create answerbox alternate answers and the boxes to show them
     answerbox = display.newText("", display.contentWidth * 0.9, 0, nil, 100)
+    answerbox:setTextColor(1/255, 1/255, 1/255)
     alternateAnswerBox1 = display.newText("", display.contentWidth * 0.9, 0, nil, 100)
+    alternateAnswerBox1:setTextColor(1/255, 1/255, 1/255)
     alternateAnswerBox2 = display.newText("", display.contentWidth * 0.9, 0, nil, 100)
+    alternateAnswerBox2:setTextColor(1/255, 1/255, 1/255)
 
     -- set the x positions of each of the answer boxes
     answerboxPreviousX = display.contentWidth * 0.9
@@ -608,13 +613,16 @@ function scene:create( event )
     
     correctObject = display.newText( "Correct", display.contentWidth/2, display.contentHeight*2/3, nil, 50)
     correctObject.isVisible = false
+    correctObject:setTextColor(1/255, 1/255, 1/255)
 
     -- Create the incorrect text object and make it visible
     incorrectObject = display.newText( "incorrect", display.contentWidth/2, display.contentHeight*2/3, nil, 50)
     incorrectObject.isVisible = false
+    incorrectObject:setTextColor(1/255, 1/255, 1/255)
 
     -- display the amount of points as text object
     pointsText = display.newText("Points = " .. points, display.contentWidth/3, display.contentHeight/3, nil,50)
+    pointsText:setTextColor(1/255, 1/255, 1/255)
 
 
     ballPosition = display.newImageRect("Images/soccerball.png", 60, 60, 0, 0)

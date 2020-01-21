@@ -1,3 +1,4 @@
+
 -----------------------------------------------------------------------------------------
 --
 -- game_level1.lua
@@ -36,11 +37,12 @@ local wrongSound = audio.loadSound("Sounds/wrongSound.mp3")
 local wrongSoundChannel
 
 -- hearts 
-local lives = 4 
+local lives = 3
 local heart1 
 local heart2 
 local heart3 
-local heart4 
+
+ 
 
 -- The background image and soccer ball for this scene
 local bkg_image
@@ -292,16 +294,18 @@ local function CheckUserAnswerInput()
             pointsText.text = "Points = " .. points 
 
         if ( points == 5 ) then 
+
             composer.gotoScene ("you_win", {effect="fade", time=500})
+
+            composer.gotoScene ("you_win", {effect = "fade", time = 500})
+
             heart1.isVisible = false
             heart2.isVisible = false
             heart3.isvisible = false
-            heart4.isvisible = false
             incorrectObject.isVisible = false 
             correctObject.isVisible = false 
             questionText.isVisible = false  
             heart3.isVisible = false 
-            heart4.isVisible = false
             correctSoundChannel = audio.play(correctSound)
             timer.performWithDelay(2000, HideCorrect)            
         end 
@@ -315,10 +319,9 @@ local function CheckUserAnswerInput()
         wrongSoundChannel = audio.play(wrongSound)
         timer.performWithDelay(2000, Hideincorrect)
 
-        if (lives == 3) then
-            heart4.isVisible = false
+
              
-        elseif (lives == 2) then
+        if (lives == 2) then
             heart3.isVisible = false
 
         elseif (lives == 1) then
@@ -332,6 +335,7 @@ local function CheckUserAnswerInput()
 
             if ( lives == 0 ) then 
                 composer.gotoScene ("you_lose", {effect = "fade", time = 500})
+                composer.gotoScene("youLose", {effect = "fade", time = 500})
                 wrongSoundChannel = audio.play(wrongSound)
                 timer.performWithDelay(2000, Hideincorrect)                
             end     
@@ -511,11 +515,11 @@ function scene:create( event )
     backButton = widget.newButton( 
     {
         -- Setting Position
-        x = display.contentWidth*0.5/5,
-        y = display.contentHeight*0.5/5,
+        x = display.contentWidth/1.12,
+        y = display.contentHeight/1.13,
         -- sets the size of the button
-        width = 150,
-        height = 75,
+        width = 190,
+        height = 100,
 
         -- Setting Dimensions
         -- width = 1000,
@@ -545,6 +549,7 @@ function scene:create( event )
     questionText = display.newText( "" , 0, 0, nil, 100)
     questionText.x = display.contentWidth * 0.3
     questionText.y = display.contentHeight * 0.9
+    questionText:setTextColor(1/255, 1/255, 1/255)
 
     -- create the soccer ball and place it on the scene
     soccerball = display.newImageRect("Images/soccerball.png", 60, 60, 0, 0)
@@ -563,8 +568,11 @@ function scene:create( event )
 
     --create answerbox alternate answers and the boxes to show them
     answerbox = display.newText("", display.contentWidth * 0.9, 0, nil, 100)
+    answerbox:setTextColor(1/255, 1/255, 1/255)
     alternateAnswerBox1 = display.newText("", display.contentWidth * 0.9, 0, nil, 100)
+    alternateAnswerBox1:setTextColor(1/255, 1/255, 1/255)
     alternateAnswerBox2 = display.newText("", display.contentWidth * 0.9, 0, nil, 100)
+    alternateAnswerBox2:setTextColor(1/255, 1/255, 1/255)
 
     -- set the x positions of each of the answer boxes
     answerboxPreviousX = display.contentWidth * 0.9
@@ -589,19 +597,19 @@ function scene:create( event )
     heart3.x = display.contentWidth * 7/8
     heart3.y = display.contentHeight * 1/7
 
-    heart4 = display.newImageRect("Images/heart.png", 50, 50)
-    heart4.x = display.contentWidth * 6.6/8
-    heart4.y = display.contentHeight * 1/7
-    
     correctObject = display.newText( "Correct", display.contentWidth/2, display.contentHeight*2/3, nil, 50)
     correctObject.isVisible = false
+    correctObject:setTextColor(1/255, 1/255, 1/255)
 
     -- Create the incorrect text object and make it visible
     incorrectObject = display.newText( "incorrect", display.contentWidth/2, display.contentHeight*2/3, nil, 50)
     incorrectObject.isVisible = false
+    incorrectObject:setTextColor(1/255, 1/255, 1/255)
 
     -- display the amount of points as text object
     pointsText = display.newText("Points = " .. points, display.contentWidth/3, display.contentHeight/3, nil,50)
+    pointsText:setTextColor(1/255, 1/255, 1/255)
+
 
     ballPosition = display.newImageRect("Images/soccerball.png", 60, 60, 0, 0)
     ballPosition.x = display.contentWidth*0.385 
@@ -623,7 +631,6 @@ function scene:create( event )
     sceneGroup:insert( heart1 )
     sceneGroup:insert( heart2 )
     sceneGroup:insert( heart3 )
-    sceneGroup:insert( heart4 )
     sceneGroup:insert( pointsText )
 
 end --function scene:create( event )
