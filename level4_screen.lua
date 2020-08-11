@@ -50,6 +50,7 @@ local alternateAnswer1
 local alternateAnswer2
 local correctText
 local incorrectText
+local backButton
 
 -- Variables containing the user answer and the actual answer
 local userAnswer
@@ -107,6 +108,7 @@ local wrongSoundChannel
 local function BackTransition()
     composer.gotoScene("mainmenu", {effect = "fade", time = 500})
 end
+
 local function DisplayQuestion()
     local randomNumber1
     local randomNumber2
@@ -128,7 +130,6 @@ local function DisplayQuestion()
     answerBoxAlreadyTouched = false
     alternateAnswerBox1AlreadyTouched = false
     alternateAnswerBox2AlreadyTouched = false
-
 end
 
 local function DetermineAlternateAnswers()    
@@ -290,14 +291,11 @@ local function CheckUserAnswerInput()
     end   
 end
 
-
 local function Lives()
     if (lives == 0) then
         composer.gotoScene("youLose", {effect = "fade", time = 500})
     end
 end
-
-
 
 local function TouchListenerAnswerBox(touch)
     --only work if none of the other boxes have been touched
@@ -455,8 +453,13 @@ function scene:create( event )
     backButton = widget.newButton( 
     {
         -- Setting Position
+
+        x = display.contentWidth/1.13,
+        y = display.contentHeight/1.12,
+
         x = display.contentWidth/1.12,
         y = display.contentHeight/1.13,
+
         -- sets the size of the button
         width = 190,
         height = 100,
@@ -466,6 +469,13 @@ function scene:create( event )
         -- height = 106,
 
         -- Setting Visual Properties
+        defaultFile = "Images/HomeUnpressedMelody@2x.png",
+        overFile = "Images/HomePressedMelody@2x.png",
+
+        -- Setting Functional Properties
+        onRelease = BackTransition
+    } )
+
         defaultFile = "Images/BackButtonUnpressedJosias@2x.png",
         overFile = "Images/BackButtonPressedJosias@2x.png",
 
@@ -476,7 +486,7 @@ function scene:create( event )
     ----------------------------------------------------------------------------------
     --Inserting backgroud image and lives
     ----------------------------------------------------------------------------------
-
+    
     -- Insert the background image
     bkg_image = display.newImageRect("Images/Level3ScreenLogan.png", 1024, 768)
     bkg_image.x = display.contentCenterX

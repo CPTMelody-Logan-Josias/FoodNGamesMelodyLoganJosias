@@ -81,7 +81,6 @@ local userAnswerBoxPlaceholder
 local correctSound
 local booSound
 
-
 --scroll speed for the ball to Score
 local scrollXSpeedCorrect = 14.5
 local scrollYSpeedCorrect = -17
@@ -103,12 +102,16 @@ local wrongSoundChannel
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
+-----------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------- 
 
 local function BackTransition()
     composer.gotoScene("mainmenu", {effect = "fade", time = 500})
 end
 
+local function BackTransition()
+    composer.gotoScene("level5&6", {effect="flipFadeOutIn", time=500})
+end
 local function DisplayQuestion()
     local randomNumber1
     local randomNumber2
@@ -457,6 +460,8 @@ function scene:create( event )
     backButton = widget.newButton( 
     {
         -- Setting Position
+        x = display.contentWidth/1.13,
+        y = display.contentHeight/1.12,
         x = display.contentWidth/1.12,
         y = display.contentHeight/1.13,
         -- sets the size of the button
@@ -468,12 +473,16 @@ function scene:create( event )
         -- height = 106,
 
         -- Setting Visual Properties
+        defaultFile = "Images/HomeUnpressedMelody@2x.png",
+        overFile = "Images/HomePressedMelody@2x.png",
+
+        -- Setting Functional Properties
+        onRelease = BackTransition
         defaultFile = "Images/BackButtonUnpressedJosias@2x.png",
         overFile = "Images/BackButtonPressedJosias@2x.png",
 
         -- Setting Functional Properties
         onRelease = BackTransition
-
     } )
     ----------------------------------------------------------------------------------
     --Inserting backgroud image and lives

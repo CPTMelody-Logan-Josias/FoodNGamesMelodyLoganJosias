@@ -292,7 +292,21 @@ local function CheckUserAnswerInput()
         -- update it in the display object
         pointsText.text = "Points = " .. points 
         print ("***points = " .. points)
+        if ( points == 5 ) then 
 
+            composer.gotoScene ("you_win", {effect="fade", time=500})
+
+            composer.gotoScene ("you_win", {effect = "fade", time = 500})
+
+            heart1.isVisible = false
+            heart2.isVisible = false
+            heart3.isvisible = false
+            incorrectObject.isVisible = false 
+            correctObject.isVisible = false 
+            questionText.isVisible = false  
+            heart3.isVisible = false 
+            correctSoundChannel = audio.play(correctSound)
+            timer.performWithDelay(2000, HideCorrect)            
         if ( points == 5 ) then              
             
             composer.gotoScene ("you_win", {effect = "fade", time = 500}) 
@@ -320,10 +334,16 @@ local function CheckUserAnswerInput()
             heart1.isVisible = false 
             composer.gotoScene("youLose", {effect = "fade", time = 500})
         end
-  
+        
 
+            if ( lives == 0 ) then 
+                composer.gotoScene ("you_lose", {effect = "fade", time = 500})
+                composer.gotoScene("youLose", {effect = "fade", time = 500})
+                wrongSoundChannel = audio.play(wrongSound)
+                timer.performWithDelay(2000, Hideincorrect)                
+            end     
+        Runtime:addEventListener("enterFrame", MovesoccerballIncorrect)          
     end    
-
 end
 
 local function TouchListenerAnswerBox(touch)
@@ -519,8 +539,8 @@ function scene:create( event )
 
         
         -- Setting Visual Properties
-        defaultFile = "Images/BackButtonUnpressedJosias@2x.png",
-        overFile = "Images/BackButtonPressedJosias@2x.png",
+        defaultFile = "Images/HomeUnpressedMelody@2x.png",
+        overFile = "Images/HomePressedMelody@2x.png",
 
         -- Setting Functional Properties
         onRelease = BackTransition
@@ -579,7 +599,6 @@ function scene:create( event )
     heart3.x = display.contentWidth * 7/8
     heart3.y = display.contentHeight * 1/7
 
-    
     correctObject = display.newText( "Correct", display.contentWidth/2, display.contentHeight*2/3, nil, 50)
     correctObject.isVisible = false
     correctObject:setTextColor(1/255, 1/255, 1/255)
